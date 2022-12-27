@@ -1,0 +1,68 @@
+.base {
+  width: 100%;
+  cursor: pointer;
+  padding: 0.8rem 1.5rem;
+  border-radius: 10px;
+  border: none;
+  background-color: white;
+  color: rgb(var(--lightning-color4));
+  transition: background 150ms ease-out, color 150ms ease-out;
+}
+
+.primary {
+  background-color: rgb(var(--lightning-color4));
+  color: white;
+}
+
+.primary:hover {
+  background-color: rgba(var(--lightning-color1), 0.6);
+  color: rgb(var(--lightning-color4));
+}
+
+.primary:active {
+  transition: none;
+  background-color: rgba(var(--lightning-color2));
+}
+
+.secondery {
+  background-color: rgba(var(--lightning-color4), 0.6);
+  color: white;
+}
+
+.ghost {
+  background-color: rgb(var(--lightning-color3));
+}
+
+.text {
+  padding: 0;
+  text-decoration: underline;
+  background-color: inherit;
+  color: rgb(var(--lightning-color4));
+}
+
+.text:hover {
+  color: rgba(var(--lightning-color4), 0.5);
+}
+
+.google {
+  position: relative;
+  height: 40px;
+  padding: 0;
+  background: none;
+  border-radius: 0;
+  border: none;
+}
+
+.kakao {
+  height: 40px;
+  background-image: url('../../../../public/asset/images/kakao_login.png');
+  background-repeat: no-repeat;
+  background-size: 100%;
+}
+
+.naver {
+  height: 40px;
+  background-image: url('../../../../public/asset/images/naver_login.png');
+  background-repeat: no-repeat;
+  background-size: 100% 40px;
+}
