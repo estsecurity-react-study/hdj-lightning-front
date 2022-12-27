@@ -6,6 +6,8 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 - [ ] 로그인 로직
     - [ ] 로컬 로그인
     - [ ] 소셜 로그인
+- [ ] 회원가입 로직
+    - [ ] 유효성 검사
 - [ ] ???
 
 ## Getting Started
