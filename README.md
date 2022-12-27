@@ -1,5 +1,13 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+## Todo
+- [ ] 로그인 페이지
+- [ ] 회원가입 페이지
+- [ ] 로그인 로직
+    - [ ] 로컬 로그인
+    - [ ] 소셜 로그인
+- [ ] ???
+
 ## Getting Started
 
 First, run the development server:
