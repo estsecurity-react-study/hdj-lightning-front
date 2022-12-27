@@ -12,6 +12,7 @@
 }
 
 .registerForm__section {
+  position: relative;
   width: 100%;
   border: none;
   display: flex;
