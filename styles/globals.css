@@ -1,15 +1,18 @@
 :root {
-  --lightning-color1: #f0fb3e;
-  --lightning-color2: #fafba5;
-  --lightning-color3: #0038ff;
-  --lightning-color4: #1e3e76;
-  --lightning-color5: #221d54;
+  --lightning-color1: 255, 231, 0;
+  --lightning-color2: 255, 246, 164;
+  --lightning-color3: 199, 199, 199;
+  --lightning-color4: 11, 5, 30;
+  --lightning-color5: 238, 238, 238;
+
+  --lightning-background-color: rgba(var(--lightning-color5), 1);
 }
 
 * {
   box-sizing: border-box;
   padding: 0;
   margin: 0;
+  font-family: var(--nanum-font);
 }
 
 html,
@@ -17,9 +20,15 @@ body {
   max-width: 100vw;
   height: 100vh;
   overflow-x: hidden;
+  background-color: var(--lightning-background-color);
 }
 
 #__next {
+  width: 100%;
+  height: 100%;
+}
+
+#__next > main {
   width: 100%;
   height: 100%;
 }
