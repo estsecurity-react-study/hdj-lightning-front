@@ -10,6 +10,7 @@ import Input from '../../../atoms/form/Input/Input';
 import Label from '../../../atoms/form/Label/Label';
 import styles from './RegisterForm.module.css';
 import ErrorText from '../../../atoms/form/ErrorText/ErrorText';
+import postData from '../../../../lib/api/postData';
 
 interface RegisterFormProps {}
 
@@ -17,6 +18,13 @@ interface RegisterInput {
   email: string;
   password: string;
   passwordC: string;
+  username: string;
+}
+
+interface RegisterDto {
+  email: string;
+  password: string;
+  username: string;
 }
 
 const registerSchema = yup
@@ -24,6 +32,7 @@ const registerSchema = yup
     email: yup.string().email().required(),
     password: yup.string().required(),
     passwordC: yup.string().required(),
+    username: yup.string().required(),
   })
   .required();
 
@@ -39,15 +48,13 @@ function RegisterForm(props: RegisterFormProps) {
 
   const onSubmit: SubmitHandler<RegisterInput> = useCallback((data) => {
     console.log('Submit Register Form!', data);
+    const { email, password, username } = data;
+    postData<RegisterDto>('auth/register', { email, password, username });
   }, []);
 
   const handleClickGoToLogin = useCallback(() => {
     router.push('/auth/login');
   }, [router]);
-
-  useEffect(() => {
-    console.log('error!', errors);
-  }, [errors]);
 
   return (
     <form
@@ -65,6 +72,19 @@ function RegisterForm(props: RegisterFormProps) {
           {...register('email')}
         />
         <ErrorText error={errors.email}>{errors.email?.message}</ErrorText>
+      </fieldset>
+
+      <fieldset className={styles.registerForm__section}>
+        <Label htmlFor="username">이름</Label>
+        <Input
+          id="username"
+          type="text"
+          placeholder="사용할 닉네임을 적어주세요."
+          {...register('username')}
+        />
+        <ErrorText error={errors.username}>
+          {errors.username?.message}
+        </ErrorText>
       </fieldset>
 
       <fieldset className={styles.registerForm__section}>
