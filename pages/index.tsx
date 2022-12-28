@@ -1,7 +1,15 @@
 import Head from 'next/head';
 import styles from '../styles/Home.module.css';
+import useSWR from 'swr';
+import { useEffect } from 'react';
 
 export default function Home() {
+  const { data } = useSWR('/auth/me');
+
+  useEffect(() => {
+    console.log(data);
+  }, [data]);
+
   return (
     <>
       <Head>

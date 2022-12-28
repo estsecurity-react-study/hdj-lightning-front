@@ -10,21 +10,13 @@ import Input from '../../../atoms/form/Input/Input';
 import Label from '../../../atoms/form/Label/Label';
 import styles from './RegisterForm.module.css';
 import ErrorText from '../../../atoms/form/ErrorText/ErrorText';
-import postData from '../../../../lib/api/postData';
+import makeErrorMessage from '../../../../lib/helpers/makeErrorMessage';
+import { AuthApi, RegisterDto } from '../../../../lib/api/auth';
 
 interface RegisterFormProps {}
 
-interface RegisterInput {
-  email: string;
-  password: string;
+interface RegisterInput extends RegisterDto {
   passwordC: string;
-  username: string;
-}
-
-interface RegisterDto {
-  email: string;
-  password: string;
-  username: string;
 }
 
 const registerSchema = yup
@@ -49,12 +41,16 @@ function RegisterForm(props: RegisterFormProps) {
   const onSubmit: SubmitHandler<RegisterInput> = useCallback((data) => {
     console.log('Submit Register Form!', data);
     const { email, password, username } = data;
-    postData<RegisterDto>('auth/register', { email, password, username });
+    AuthApi.register({ email, password, username });
   }, []);
 
   const handleClickGoToLogin = useCallback(() => {
     router.push('/auth/login');
   }, [router]);
+
+  useEffect(() => {
+    console.log(errors);
+  }, [errors]);
 
   return (
     <form
@@ -71,7 +67,11 @@ function RegisterForm(props: RegisterFormProps) {
           placeholder="example@email.com"
           {...register('email')}
         />
-        <ErrorText error={errors.email}>{errors.email?.message}</ErrorText>
+        <ErrorText>
+          {makeErrorMessage(errors.email, {
+            messages: { email: '이메일 검증오류' },
+          })}
+        </ErrorText>
       </fieldset>
 
       <fieldset className={styles.registerForm__section}>
@@ -82,8 +82,10 @@ function RegisterForm(props: RegisterFormProps) {
           placeholder="사용할 닉네임을 적어주세요."
           {...register('username')}
         />
-        <ErrorText error={errors.username}>
-          {errors.username?.message}
+        <ErrorText>
+          {makeErrorMessage(errors.username, {
+            messages: { required: 'custom!' },
+          })}
         </ErrorText>
       </fieldset>
 
@@ -95,9 +97,7 @@ function RegisterForm(props: RegisterFormProps) {
           placeholder="사용하실 비밀번호를 적어주세요."
           {...register('password')}
         />
-        <ErrorText error={errors.password}>
-          {errors.password?.message}
-        </ErrorText>
+        <ErrorText>{makeErrorMessage(errors.password)}</ErrorText>
       </fieldset>
 
       <fieldset className={styles.registerForm__section}>
@@ -108,9 +108,7 @@ function RegisterForm(props: RegisterFormProps) {
           placeholder="사용하실 비밀번호를 한번 더 적어주세요."
           {...register('passwordC')}
         />
-        <ErrorText error={errors.passwordC}>
-          {errors.passwordC?.message}
-        </ErrorText>
+        <ErrorText>{makeErrorMessage(errors.passwordC)}</ErrorText>
       </fieldset>
 
       <div className={styles.registerForm__submitWrapper}>

@@ -1,21 +1,47 @@
 import { useRouter } from 'next/router';
-import { FormEvent, useCallback } from 'react';
+import { useCallback } from 'react';
 import Button from '../../../atoms/form/Button/Button';
 import Input from '../../../atoms/form/Input/Input';
 import Label from '../../../atoms/form/Label/Label';
 import styles from './LoginForm.module.css';
 import GoogleLogin from '../../../../public/asset/images/google_login.png';
 import Image from 'next/image';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
+import ErrorText from '../../../atoms/form/ErrorText/ErrorText';
+import makeErrorMessage from '../../../../lib/helpers/makeErrorMessage';
+import { AuthApi, LoginDto } from '../../../../lib/api/auth';
 
 interface LoginFormProps {}
 
+interface LoginInput extends LoginDto {}
+
+const loginSchema = yup.object({
+  email: yup.string().email().required(),
+  password: yup.string().required(),
+});
+
 function LoginForm(props: LoginFormProps) {
   const router = useRouter();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginInput>({ resolver: yupResolver(loginSchema) });
 
-  const handleSubmit = useCallback((e: FormEvent) => {
-    e.preventDefault();
-    console.log('Submit Login Form!');
-  }, []);
+  const onSubmit: SubmitHandler<LoginInput> = useCallback(
+    async (data) => {
+      console.log('Submit Login Form!');
+      const res = await AuthApi.login(data as LoginDto);
+      if (!res) {
+        return;
+      }
+
+      router.replace('/');
+    },
+    [router],
+  );
 
   const handleClickNotAccount = useCallback(() => {
     router.push('/auth/register');
@@ -25,17 +51,39 @@ function LoginForm(props: LoginFormProps) {
     router.push('/auth/login');
   }, [router]);
 
+  const handleClickTest = useCallback(async () => {
+    const res = await AuthApi.getProfile();
+
+    console.log(res);
+  }, []);
+
   return (
-    <form action="" className={styles.loginForm} onSubmit={handleSubmit}>
+    <form
+      action=""
+      className={styles.loginForm}
+      onSubmit={handleSubmit(onSubmit)}
+    >
       <h2 className={styles.loginForm__title}>로그인</h2>
       <fieldset className={styles.loginForm__section}>
-        <Label htmlFor="temp">Email</Label>
-        <Input id="temp" type="email" placeholder="example@email.com" />
+        <Label htmlFor="email">Email</Label>
+        <Input
+          id="email"
+          type="email"
+          placeholder="example@email.com"
+          {...register('email')}
+        />
+        <ErrorText>{makeErrorMessage(errors.email)}</ErrorText>
       </fieldset>
 
       <fieldset className={styles.loginForm__section}>
-        <Label htmlFor="temp">Password</Label>
-        <Input id="temp" type="password" placeholder="Your Password" />
+        <Label htmlFor="password">Password</Label>
+        <Input
+          id="password"
+          type="password"
+          placeholder="비밀번호를 적어주세요."
+          {...register('password')}
+        />
+        <ErrorText>{makeErrorMessage(errors.password)}</ErrorText>
       </fieldset>
 
       <div className={styles.loginForm__submitWrapper}>
@@ -62,6 +110,10 @@ function LoginForm(props: LoginFormProps) {
           계정이 없으신가요?
         </Button>
       </div>
+
+      <Button type="button" onClick={handleClickTest}>
+        TEST
+      </Button>
     </form>
   );
 }
