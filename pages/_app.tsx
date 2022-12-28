@@ -3,6 +3,7 @@ import type { AppProps } from 'next/app';
 import LocalFont from '@next/font/local';
 import { SWRConfig } from 'swr';
 import { fetcher } from '../lib/api';
+import Layout from '../components/layout/Layout';
 
 const NanumNeo = LocalFont({
   src: '../public/asset/font/Nanum/NanumSquareNeo-Variable.woff',
@@ -13,7 +14,9 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <SWRConfig value={{ fetcher }}>
       <main className={`${NanumNeo.variable}`}>
-        <Component {...pageProps} />
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
       </main>
     </SWRConfig>
   );
