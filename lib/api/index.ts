@@ -7,19 +7,16 @@ export const getToken = () => {
   return token;
 };
 
+export const api = axios.create({
+  baseURL: process.env.NEXT_PUBLIC_API_URL,
+  headers: { common: { Authorization: `Bearer ${getToken()}` } },
+});
+
 export const setToken = (token: string) => {
   if (typeof window === 'undefined') return;
   localStorage.setItem('token', token);
+  api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 };
-
-export const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL,
-  headers: {
-    common: {
-      Authorization: `Bearer ${getToken() || ''}`,
-    },
-  },
-});
 
 export const fetcher = (url: string) => api.get(url).then((res) => res.data);
 
