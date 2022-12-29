@@ -7,7 +7,7 @@ import styles from './Header.module.css';
 
 function Header() {
   const router = useRouter();
-  const { isLogin, mutate, user } = useUser();
+  const { isLogin, user } = useUser();
 
   const handleClickRegister = useCallback(
     () => router.push('/auth/register'),
@@ -20,14 +20,12 @@ function Header() {
   );
 
   const handleClickLogout = useCallback(() => {
-    mutate(null).then(() => {
-      AuthApi.logout();
-      window.localStorage.setItem('logout', `${Date.now()}`);
-    });
-  }, [mutate]);
+    AuthApi.logout().then(() => router.reload());
+  }, [router]);
 
   return (
     <header className={styles.container}>
+      {JSON.stringify(user)}
       {isLogin ? (
         <div className={styles.profile}>
           <article className={styles.tempCircle} />

@@ -25,7 +25,6 @@ const loginSchema = yup.object({
 
 function LoginForm(props: LoginFormProps) {
   const router = useRouter();
-  const { mutate } = useUser();
   const {
     register,
     handleSubmit,
@@ -38,7 +37,6 @@ function LoginForm(props: LoginFormProps) {
       try {
         const res = await AuthApi.login(data as LoginDto);
         if (res) {
-          mutate(res.data);
           router.replace('/');
         }
       } catch (error) {
@@ -46,7 +44,7 @@ function LoginForm(props: LoginFormProps) {
         resetField('password');
       }
     },
-    [router, mutate],
+    [router],
   );
 
   const handleClickNotAccount = useCallback(() => {
