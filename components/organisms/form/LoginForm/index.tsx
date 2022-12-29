@@ -9,8 +9,9 @@ import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import ErrorText from '../../../atoms/form/ErrorText/ErrorText';
 import makeErrorMessage from '../../../../lib/helpers/makeErrorMessage';
-import { AuthApi, LoginDto } from '../../../../lib/api/auth';
+import { AuthApi } from '../../../../lib/api/auth';
 import useUser from '../../../../lib/hooks/useUser';
+import { LoginDto } from '../../../../@types/api/auth';
 
 interface LoginFormProps {}
 

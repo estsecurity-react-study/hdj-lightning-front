@@ -11,7 +11,10 @@ import Label from '../../../atoms/form/Label/Label';
 import styles from './RegisterForm.module.css';
 import ErrorText from '../../../atoms/form/ErrorText/ErrorText';
 import makeErrorMessage from '../../../../lib/helpers/makeErrorMessage';
-import { AuthApi, RegisterDto } from '../../../../lib/api/auth';
+import { AuthApi } from '../../../../lib/api/auth';
+import { AxiosError } from 'axios';
+import { RegisterDto } from '../../../../@types/api/auth';
+import { MyApiError } from '../../../../@types/api/api';
 
 interface RegisterFormProps {}
 
@@ -33,6 +36,7 @@ function RegisterForm(props: RegisterFormProps) {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<RegisterInput>({
     resolver: yupResolver(registerSchema),
@@ -40,10 +44,16 @@ function RegisterForm(props: RegisterFormProps) {
 
   const onSubmit: SubmitHandler<RegisterInput> = useCallback(
     (data) => {
+      // TODO: 비밀번호, 비밀번호 확인 유효성 검사 추가
       const { email, password, username } = data;
-      AuthApi.register({ email, password, username }).then(() =>
-        router.push('/auth/login'),
-      );
+      AuthApi.register({ email, password, username })
+        .then(() => {
+          router.push('/auth/login');
+          reset();
+        })
+        .catch((err: MyApiError) => {
+          alert(err.response?.data.message);
+        });
     },
     [router],
   );
@@ -51,10 +61,6 @@ function RegisterForm(props: RegisterFormProps) {
   const handleClickGoToLogin = useCallback(() => {
     router.push('/auth/login');
   }, [router]);
-
-  useEffect(() => {
-    console.log(errors);
-  }, [errors]);
 
   return (
     <form
