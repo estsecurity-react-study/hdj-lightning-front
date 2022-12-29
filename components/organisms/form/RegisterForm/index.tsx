@@ -38,11 +38,15 @@ function RegisterForm(props: RegisterFormProps) {
     resolver: yupResolver(registerSchema),
   });
 
-  const onSubmit: SubmitHandler<RegisterInput> = useCallback((data) => {
-    console.log('Submit Register Form!', data);
-    const { email, password, username } = data;
-    AuthApi.register({ email, password, username });
-  }, []);
+  const onSubmit: SubmitHandler<RegisterInput> = useCallback(
+    (data) => {
+      const { email, password, username } = data;
+      AuthApi.register({ email, password, username }).then(() =>
+        router.push('/auth/login'),
+      );
+    },
+    [router],
+  );
 
   const handleClickGoToLogin = useCallback(() => {
     router.push('/auth/login');

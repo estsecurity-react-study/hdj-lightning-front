@@ -4,14 +4,13 @@ import Button from '../../../atoms/form/Button/Button';
 import Input from '../../../atoms/form/Input/Input';
 import Label from '../../../atoms/form/Label/Label';
 import styles from './LoginForm.module.css';
-import GoogleLogin from '../../../../public/asset/images/google_login.png';
-import Image from 'next/image';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import ErrorText from '../../../atoms/form/ErrorText/ErrorText';
 import makeErrorMessage from '../../../../lib/helpers/makeErrorMessage';
 import { AuthApi, LoginDto } from '../../../../lib/api/auth';
+import useUser from '../../../../lib/hooks/useUser';
 
 interface LoginFormProps {}
 
@@ -24,6 +23,7 @@ const loginSchema = yup.object({
 
 function LoginForm(props: LoginFormProps) {
   const router = useRouter();
+  const { mutate } = useUser();
   const {
     register,
     handleSubmit,
@@ -38,9 +38,10 @@ function LoginForm(props: LoginFormProps) {
         return;
       }
 
+      mutate(res.data);
       router.replace('/');
     },
-    [router],
+    [router, mutate],
   );
 
   const handleClickNotAccount = useCallback(() => {
@@ -50,12 +51,6 @@ function LoginForm(props: LoginFormProps) {
   const handleClickForgotPassword = useCallback(() => {
     router.push('/auth/login');
   }, [router]);
-
-  const handleClickTest = useCallback(async () => {
-    const res = await AuthApi.getProfile();
-
-    console.log(res);
-  }, []);
 
   return (
     <form

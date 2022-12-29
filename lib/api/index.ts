@@ -18,6 +18,11 @@ export const setToken = (token: string) => {
   api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 };
 
+export const removeToken = () => {
+  localStorage.removeItem('token');
+  api.defaults.headers.common['Authorization'] = ``;
+};
+
 export const fetcher = (url: string) => api.get(url).then((res) => res.data);
 
 api.interceptors.request.use(

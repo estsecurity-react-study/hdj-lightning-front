@@ -1,4 +1,4 @@
-import { api, setToken } from '..';
+import { api, removeToken, setToken } from '..';
 
 export interface RegisterDto {
   email: string;
@@ -31,14 +31,8 @@ const login = async (data: LoginDto) => {
   }
 };
 
-const getProfile = async () => {
-  try {
-    const res = await api.get('/auth/me');
-
-    return res.data;
-  } catch (error) {
-    console.log('error!', error);
-  }
+const logout = () => {
+  removeToken();
 };
 
-export const AuthApi = { register, login, getProfile };
+export const AuthApi = { register, login, logout };

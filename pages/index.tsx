@@ -1,17 +1,26 @@
 import Head from 'next/head';
 import styles from '../styles/Home.module.css';
-import useSWR from 'swr';
 import LightningLogo from '../public/asset/svg/lightning-icon.svg';
 
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import Button from '../components/atoms/form/Button/Button';
+import { useRouter } from 'next/router';
+import useUser from '../lib/hooks/useUser';
 
 export default function Home() {
-  const { data } = useSWR('/auth/me');
+  const { isLogin } = useUser();
+  const router = useRouter();
 
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
+  const handleClickCTA = useCallback(() => {
+    if (!isLogin) {
+      // TODO: 로그인 완료 후에 모임 만드는 페이지로 한번 더 리다이렉트
+      router.push('/auth/login');
+      return;
+    }
+
+    // next
+    console.log('make Room!');
+  }, [router, isLogin]);
 
   return (
     <>
@@ -23,7 +32,7 @@ export default function Home() {
       </Head>
       <main className={styles.container}>
         <section className={styles.section}>
-          <div className={styles.wrapper}>
+          <div>
             <h3 className={styles.title}>
               <p className={styles.highlight}>번개</p>
               처럼 빠르게 인연을 만들어드려요.
@@ -46,7 +55,7 @@ export default function Home() {
           <div className={styles.card}>
             <LightningLogo className={styles.logo} />
             <div className={styles.ctaButton__wrapper}>
-              <Button kind="primary">
+              <Button kind="primary" onClick={handleClickCTA}>
                 <span className={styles.ctaButton__content}>
                   모임 만들러 가기!
                 </span>
