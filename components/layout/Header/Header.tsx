@@ -20,8 +20,10 @@ function Header() {
   );
 
   const handleClickLogout = useCallback(() => {
-    AuthApi.logout();
-    mutate(null);
+    mutate(null).then(() => {
+      AuthApi.logout();
+      window.localStorage.setItem('logout', `${Date.now()}`);
+    });
   }, [mutate]);
 
   return (

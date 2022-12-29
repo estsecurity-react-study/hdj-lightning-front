@@ -3,24 +3,41 @@ import axios from 'axios';
 export const getToken = () => {
   if (typeof window === 'undefined') return;
 
-  const token = localStorage.getItem('token');
-  return token;
+  // const token = localStorage.getItem('token');
+  // return token;
+  return sessionStorage.getItem('access');
 };
 
 export const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
+  withCredentials: true,
   headers: { common: { Authorization: `Bearer ${getToken()}` } },
 });
 
 export const setToken = (token: string) => {
   if (typeof window === 'undefined') return;
-  localStorage.setItem('token', token);
+  // localStorage.setItem('token', token);
   api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  sessionStorage.setItem('access', token);
+};
+
+export const getRefresh = () => {
+  if (typeof window === 'undefined') return;
+
+  return sessionStorage.getItem('refresh');
+};
+
+export const setRefresh = (token: string) => {
+  if (typeof window === 'undefined') return;
+
+  return sessionStorage.setItem('refresh', token);
 };
 
 export const removeToken = () => {
-  localStorage.removeItem('token');
+  // localStorage.removeItem('token');
   api.defaults.headers.common['Authorization'] = ``;
+  sessionStorage.removeItem('access');
+  sessionStorage.removeItem('refresh');
 };
 
 export const fetcher = (url: string) => api.get(url).then((res) => res.data);
