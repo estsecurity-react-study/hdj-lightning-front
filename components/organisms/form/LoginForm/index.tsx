@@ -12,6 +12,7 @@ import makeErrorMessage from '../../../../lib/helpers/makeErrorMessage';
 import { AuthApi } from '../../../../lib/api/auth';
 import useUser from '../../../../lib/hooks/useUser';
 import { LoginDto } from '../../../../@types/api/auth';
+import { MyApiError } from '../../../../@types/api/api';
 
 interface LoginFormProps {}
 
@@ -28,19 +29,22 @@ function LoginForm(props: LoginFormProps) {
   const {
     register,
     handleSubmit,
+    resetField,
     formState: { errors },
   } = useForm<LoginInput>({ resolver: yupResolver(loginSchema) });
 
   const onSubmit: SubmitHandler<LoginInput> = useCallback(
     async (data) => {
-      console.log('Submit Login Form!');
-      const res = await AuthApi.login(data as LoginDto);
-      if (!res) {
-        return;
+      try {
+        const res = await AuthApi.login(data as LoginDto);
+        if (res) {
+          mutate(res.data);
+          router.replace('/');
+        }
+      } catch (error) {
+        alert((error as MyApiError).response?.data.message);
+        resetField('password');
       }
-
-      mutate(res.data);
-      router.replace('/');
     },
     [router, mutate],
   );
