@@ -13,6 +13,7 @@ import { AuthApi } from '../../../../lib/api/auth';
 import useUser from '../../../../lib/hooks/useUser';
 import { LoginDto } from '../../../../@types/api/auth';
 import { MyApiError } from '../../../../@types/api/api';
+import { BASE_API_URL } from '../../../../lib/api';
 
 interface LoginFormProps {}
 
@@ -46,6 +47,10 @@ function LoginForm(props: LoginFormProps) {
     },
     [router],
   );
+
+  const handleClickLoginGoogle = useCallback(() => {
+    router.push(`${BASE_API_URL}/auth/google/login`);
+  }, [router]);
 
   const handleClickNotAccount = useCallback(() => {
     router.push('/auth/register');
@@ -87,6 +92,9 @@ function LoginForm(props: LoginFormProps) {
       <div className={styles.loginForm__submitWrapper}>
         <Button type="submit" kind="submit">
           로그인
+        </Button>
+        <Button type="button" kind="submit" onClick={handleClickLoginGoogle}>
+          Google
         </Button>
       </div>
       <div className={styles.loginForm__helperWrapper}>

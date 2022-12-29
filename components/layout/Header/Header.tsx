@@ -25,7 +25,6 @@ function Header() {
 
   return (
     <header className={styles.container}>
-      {JSON.stringify(user)}
       {isLogin ? (
         <div className={styles.profile}>
           <article className={styles.tempCircle} />
