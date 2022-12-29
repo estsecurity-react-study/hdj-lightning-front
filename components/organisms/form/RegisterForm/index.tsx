@@ -112,7 +112,7 @@ function RegisterForm(props: RegisterFormProps) {
       </fieldset>
 
       <div className={styles.registerForm__submitWrapper}>
-        <Button type="submit" kind="primary">
+        <Button type="submit" kind="submit">
           회원가입
         </Button>
       </div>

@@ -6,6 +6,7 @@ type ButtonKind =
   | 'secondery'
   | 'ghost'
   | 'text'
+  | 'submit'
   | 'google'
   | 'kakao'
   | 'naver';

@@ -10,8 +10,7 @@
 }
 
 .primary {
-  background-color: rgb(var(--lightning-color4));
-  color: white;
+  background-color: rgb(var(--lightning-color1));
 }
 
 .primary:hover {
@@ -20,6 +19,21 @@
 }
 
 .primary:active {
+  transition: none;
+  background-color: rgba(var(--lightning-color2));
+}
+
+.submit {
+  background-color: rgb(var(--lightning-color4));
+  color: white;
+}
+
+.submit:hover {
+  background-color: rgba(var(--lightning-color1), 0.6);
+  color: rgb(var(--lightning-color4));
+}
+
+.submit:active {
   transition: none;
   background-color: rgba(var(--lightning-color2));
 }

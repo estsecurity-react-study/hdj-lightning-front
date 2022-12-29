@@ -1,7 +1,10 @@
 import Head from 'next/head';
 import styles from '../styles/Home.module.css';
 import useSWR from 'swr';
+import LightningLogo from '../public/asset/svg/lightning-icon.svg';
+
 import { useEffect } from 'react';
+import Button from '../components/atoms/form/Button/Button';
 
 export default function Home() {
   const { data } = useSWR('/auth/me');
@@ -18,7 +21,40 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className={styles.main}>This is Main Page</main>
+      <main className={styles.container}>
+        <section className={styles.section}>
+          <div className={styles.wrapper}>
+            <h3 className={styles.title}>
+              <p className={styles.highlight}>번개</p>
+              처럼 빠르게 인연을 만들어드려요.
+            </h3>
+
+            <p className={styles.content}>
+              본인이 원하는 주제로 모임을 만들고 머시갱이 하고 1도 하고 2도하고
+              3도하고 ...
+            </p>
+            <p className={styles.content}>
+              본인이 원하는 주제로 모임을 만들고 머시갱이 하고 1도 하고 2도하고
+              3도하고 ...
+            </p>
+            <p className={styles.content}>
+              본인이 원하는 주제로 모임을 만들고 머시갱이 하고 1도 하고 2도하고
+              3도하고 ...
+            </p>
+          </div>
+
+          <div className={styles.card}>
+            <LightningLogo className={styles.logo} />
+            <div className={styles.ctaButton__wrapper}>
+              <Button kind="primary">
+                <span className={styles.ctaButton__content}>
+                  모임 만들러 가기!
+                </span>
+              </Button>
+            </div>
+          </div>
+        </section>
+      </main>
     </>
   );
 }

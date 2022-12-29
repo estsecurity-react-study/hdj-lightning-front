@@ -5,7 +5,7 @@
   --lightning-color4: 11, 5, 30;
   --lightning-color5: 238, 238, 238;
 
-  --lightning-background-color: rgba(var(--lightning-color5), 1);
+  --lightning-background-color: rgba(var(--lightning-color5), 0.2);
 }
 
 * {
@@ -21,6 +21,31 @@ body {
   height: 100vh;
   overflow-x: hidden;
   background-color: var(--lightning-background-color);
+  /* background-image: linear-gradient(
+    to right top,
+    #eeeeee,
+    #f0f0f0,
+    #f2f2f2,
+    #f3f3f3,
+    #f3f3f3,
+    #f3f3f3,
+    #f4f4f4,
+    #f5f5f5,
+    #f6f6f6,
+    #f7f7f7,
+    #f7f7f7,
+    #f7f7f7,
+    #f7f7f7,
+    #f7f7f7,
+    #f7f7f7,
+    #f8f6fb,
+    #fbf4fe,
+    #fff2ff,
+    #ffeaf6,
+    #ffe6db,
+    #ffeab9,
+    #fff6a4
+  ); */
 }
 
 #__next {

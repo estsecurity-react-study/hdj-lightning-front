@@ -87,20 +87,9 @@ function LoginForm(props: LoginFormProps) {
       </fieldset>
 
       <div className={styles.loginForm__submitWrapper}>
-        <Button type="submit" kind="primary">
+        <Button type="submit" kind="submit">
           로그인
         </Button>
-        {/* <Button type="button" kind="kakao" />
-        <Button type="button" kind="google">
-          <Image
-            src={GoogleLogin}
-            alt=""
-            fill
-            placeholder="blur"
-            style={{ objectFit: 'contain' }}
-          />
-        </Button>
-        <Button type="button" kind="naver" /> */}
       </div>
       <div className={styles.loginForm__helperWrapper}>
         <Button type="button" kind="text" onClick={handleClickForgotPassword}>
@@ -110,10 +99,6 @@ function LoginForm(props: LoginFormProps) {
           계정이 없으신가요?
         </Button>
       </div>
-
-      <Button type="button" onClick={handleClickTest}>
-        TEST
-      </Button>
     </form>
   );
 }
