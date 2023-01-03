@@ -49,7 +49,7 @@ function LoginForm(props: LoginFormProps) {
   );
 
   const handleClickLoginGoogle = useCallback(() => {
-    router.push(`${BASE_API_URL}/auth/google/login`);
+    router.push(`${BASE_API_URL}/oauth/google/login`);
   }, [router]);
 
   const handleClickNotAccount = useCallback(() => {
