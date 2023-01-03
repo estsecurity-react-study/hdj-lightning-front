@@ -2,10 +2,32 @@ import Head from 'next/head';
 import styles from '../styles/Home.module.css';
 import LightningLogo from '../public/asset/svg/lightning-icon.svg';
 
-import { useCallback, useEffect } from 'react';
+import { useCallback } from 'react';
 import Button from '../components/atoms/form/Button/Button';
 import { useRouter } from 'next/router';
 import useUser from '../lib/hooks/useUser';
+import { motion } from 'framer-motion';
+import { variants } from '../lib/helpers/variants';
+
+const containerVariants = variants({
+  hidden: { opacity: 0 },
+  show: { opacity: 1, transition: { staggerChildren: 0.3 } },
+});
+
+const itemVariants = variants({
+  hidden: { opacity: 0 },
+  show: { opacity: 1 },
+});
+
+const logoVariants = variants({
+  float: {
+    y: [0, -3, 0],
+    transition: {
+      duration: 5,
+      repeat: Infinity,
+    },
+  },
+});
 
 export default function Home() {
   const { isLogin } = useUser();
@@ -32,28 +54,46 @@ export default function Home() {
       </Head>
       <main className={styles.container}>
         <section className={styles.section}>
-          <div>
-            <h3 className={styles.title}>
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            animate="show"
+          >
+            <motion.h3
+              variants={itemVariants}
+              initial="hidden"
+              animate="show"
+              transition={{ duration: 0.5 }}
+              className={styles.title}
+            >
               <p className={styles.highlight}>번개</p>
               처럼 빠르게 인연을 만들어드려요.
-            </h3>
+            </motion.h3>
 
-            <p className={styles.content}>
+            <motion.p variants={itemVariants} className={styles.content}>
               본인이 원하는 주제로 모임을 만들고 머시갱이 하고 1도 하고 2도하고
               3도하고 ...
-            </p>
-            <p className={styles.content}>
+            </motion.p>
+            <motion.p variants={itemVariants} className={styles.content}>
               본인이 원하는 주제로 모임을 만들고 머시갱이 하고 1도 하고 2도하고
               3도하고 ...
-            </p>
-            <p className={styles.content}>
+            </motion.p>
+            <motion.p variants={itemVariants} className={styles.content}>
               본인이 원하는 주제로 모임을 만들고 머시갱이 하고 1도 하고 2도하고
               3도하고 ...
-            </p>
-          </div>
+            </motion.p>
+          </motion.div>
 
-          <div className={styles.card}>
-            <LightningLogo className={styles.logo} />
+          <motion.div
+            variants={itemVariants}
+            initial="hidden"
+            animate="show"
+            className={styles.card}
+          >
+            <motion.div variants={logoVariants} animate="float">
+              <LightningLogo className={styles.logo} />
+            </motion.div>
+
             <div className={styles.ctaButton__wrapper}>
               <Button kind="primary" onClick={handleClickCTA}>
                 <span className={styles.ctaButton__content}>
@@ -61,7 +101,7 @@ export default function Home() {
                 </span>
               </Button>
             </div>
-          </div>
+          </motion.div>
         </section>
       </main>
     </>
