@@ -83,7 +83,7 @@
 }
 
 @media screen and (max-width: 1023px) {
-  .container {
+  .section {
     flex-direction: column;
     align-items: center;
   }

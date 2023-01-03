@@ -90,8 +90,12 @@ export default function Home() {
             animate="show"
             className={styles.card}
           >
-            <motion.div variants={logoVariants} animate="float">
-              <LightningLogo className={styles.logo} />
+            <motion.div
+              variants={logoVariants}
+              animate="float"
+              className={styles.logo}
+            >
+              <LightningLogo />
             </motion.div>
 
             <div className={styles.ctaButton__wrapper}>
