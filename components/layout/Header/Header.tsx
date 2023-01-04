@@ -1,13 +1,16 @@
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useCallback } from 'react';
 import { AuthApi } from '../../../lib/api/auth';
 import useUser from '../../../lib/hooks/useUser';
 import Button from '../../atoms/form/Button/Button';
+import { Menu, MenuItem, MenuButton } from '@szhsin/react-menu';
+import ProfileSvg from '../../../public/asset/svg/profile.svg';
 import styles from './Header.module.css';
 
 function Header() {
   const router = useRouter();
-  const { isLogin, user } = useUser();
+  const { isLogin, user, isLoading } = useUser();
 
   const handleClickRegister = useCallback(
     () => router.push('/auth/register'),
@@ -25,9 +28,29 @@ function Header() {
 
   return (
     <header className={styles.container}>
-      {isLogin ? (
+      {isLogin && !isLoading ? (
         <div className={styles.profile}>
-          <article className={styles.tempCircle} />
+          <Menu
+            menuButton={
+              <article className={styles.profileImage}>
+                <Image
+                  src={user?.photo || ''}
+                  alt={`${user?.username}'s profile Image`}
+                  fill
+                />
+              </article>
+            }
+            transition
+          >
+            <MenuItem>
+              <article className={styles.svgWrapper}>
+                <ProfileSvg />
+              </article>
+              설정
+            </MenuItem>
+            <MenuItem>설정</MenuItem>
+            <MenuItem>설정</MenuItem>
+          </Menu>
           <div>
             <Button kind="ghost" onClick={handleClickLogout}>
               로그아웃

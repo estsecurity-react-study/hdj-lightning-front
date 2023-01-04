@@ -24,9 +24,20 @@
   gap: 1rem;
 }
 
-.tempCircle {
+.profileImage {
+  position: relative;
   width: 36px;
   height: 36px;
   border-radius: 50%;
   background-color: antiquewhite;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.svgWrapper {
+  width: 32px;
+  height: 32px;
 }

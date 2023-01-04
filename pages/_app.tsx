@@ -4,6 +4,8 @@ import LocalFont from '@next/font/local';
 import { SWRConfig } from 'swr';
 import { fetcher } from '../lib/api';
 import Layout from '../components/layout/Layout';
+import '@szhsin/react-menu/dist/index.css';
+import '@szhsin/react-menu/dist/transitions/slide.css';
 
 const NanumNeo = LocalFont({
   src: '../public/asset/font/Nanum/NanumSquareNeo-Variable.woff',

@@ -8,3 +8,9 @@ export interface LoginDto {
   email: string;
   password: string;
 }
+
+export interface UpdateProfileDto {
+  password?: string;
+  username?: string;
+  photo?: string;
+}
