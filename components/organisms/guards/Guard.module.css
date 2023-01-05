@@ -1,0 +1,53 @@
+.container {
+  overflow: hidden;
+  position: relative;
+  width: 500px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 4rem;
+}
+
+.title {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+}
+
+@keyframes cloudMoving1 {
+  0% {
+    left: 0%;
+  }
+  100% {
+    left: calc(-100% + 20px);
+  }
+}
+
+@keyframes cloudMoving2 {
+  0% {
+    left: calc(100% - 20px);
+  }
+  100% {
+    left: 0%;
+  }
+}
+
+.cloudWrapper {
+  position: absolute;
+  display: flex;
+  bottom: -38px;
+  left: 0%;
+  animation: cloudMoving1 7s linear infinite;
+}
+
+.cloudWrapper:last-child {
+  left: calc(100% - 20px);
+  animation: cloudMoving2 7s linear infinite;
+}
+
+.cloud {
+  width: 64px;
+  height: 64px;
+  background-color: rgb(var(--lightning-color4));
+  border-radius: 50%;
+  margin-left: -16px;
+}

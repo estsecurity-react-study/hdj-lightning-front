@@ -12,7 +12,6 @@ import styles from './RegisterForm.module.css';
 import ErrorText from '../../../atoms/form/ErrorText/ErrorText';
 import makeErrorMessage from '../../../../lib/helpers/makeErrorMessage';
 import { AuthApi } from '../../../../lib/api/auth';
-import { AxiosError } from 'axios';
 import { RegisterDto } from '../../../../@types/api/auth';
 import { MyApiError } from '../../../../@types/api/api';
 
