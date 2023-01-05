@@ -1,6 +1,7 @@
 import Head from 'next/head';
 import styles from '../styles/Home.module.css';
 import LightningLogo from '../public/asset/svg/lightning-icon.svg';
+import ProfileSvg from '../public/asset/svg/profile.svg';
 
 import { useCallback } from 'react';
 import Button from '../components/atoms/form/Button/Button';

@@ -1,5 +1,9 @@
 import { api } from '..';
-import { LoginDto, RegisterDto } from '../../../@types/api/auth';
+import {
+  LoginDto,
+  RegisterDto,
+  UpdateProfileDto,
+} from '../../../@types/api/auth';
 
 const register = (registerDto: RegisterDto) => {
   return api.post('/auth/register', registerDto);
@@ -13,4 +17,8 @@ const logout = () => {
   return api.post('/auth/logout');
 };
 
-export const AuthApi = { register, login, logout };
+const updateProfile = (updateProfileDto: UpdateProfileDto) => {
+  return api.patch('/user/profile', updateProfileDto);
+};
+
+export const AuthApi = { register, login, logout, updateProfile };

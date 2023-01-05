@@ -1,0 +1,38 @@
+.profileForm {
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 0 1rem;
+}
+
+.profileForm__title {
+  color: rgb(var(--lightning-color4));
+  margin-bottom: 2rem;
+}
+
+.profileForm__section {
+  position: relative;
+  width: 100%;
+  border: none;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0.8rem;
+}
+
+.profileForm__submitWrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.profileForm__helperWrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 1rem;
+  gap: 0.45rem;
+}

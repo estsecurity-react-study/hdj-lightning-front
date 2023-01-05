@@ -22,6 +22,11 @@ function Header() {
     [router],
   );
 
+  const handleClickUpdateProfile = useCallback(
+    () => router.push('/profile/update'),
+    [router],
+  );
+
   const handleClickLogout = useCallback(() => {
     AuthApi.logout().then(() => router.reload());
   }, [router]);
@@ -42,14 +47,9 @@ function Header() {
             }
             transition
           >
-            <MenuItem>
-              <article className={styles.svgWrapper}>
-                <ProfileSvg />
-              </article>
-              설정
-            </MenuItem>
-            <MenuItem>설정</MenuItem>
-            <MenuItem>설정</MenuItem>
+            <MenuItem onClick={handleClickUpdateProfile}>프로필 설정</MenuItem>
+            <MenuItem>설정?</MenuItem>
+            <MenuItem>설정?</MenuItem>
           </Menu>
           <div>
             <Button kind="ghost" onClick={handleClickLogout}>
