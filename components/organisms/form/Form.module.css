@@ -1,4 +1,5 @@
 .form__container {
+  position: relative;
   width: 300px;
   display: flex;
   flex-direction: column;
@@ -9,6 +10,11 @@
 .form__title {
   color: rgb(var(--lightning-color4));
   margin-bottom: 2rem;
+}
+
+.form__title_sub {
+  margin-top: 0.3rem;
+  font-size: 1rem;
 }
 
 .form__section {
@@ -35,4 +41,12 @@
   width: 100%;
   margin-top: 1rem;
   gap: 0.45rem;
+}
+
+.lockerIcon {
+  display: block;
+  float: left;
+  margin-right: 0.4rem;
+  width: 19px;
+  height: 24px;
 }

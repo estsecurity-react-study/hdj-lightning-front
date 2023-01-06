@@ -17,7 +17,7 @@ import useUser from '../../../../lib/hooks/useUser';
 
 import styles from '../Form.module.css';
 
-interface ProfileInput extends Omit<UpdateProfileDto, 'password'> {}
+interface ProfileInput extends UpdateProfileDto {}
 
 const ProfileSchema = yup
   .object({

@@ -9,8 +9,12 @@ export interface LoginDto {
   password: string;
 }
 
-export interface UpdateProfileDto {
+interface UpdateUserDto {
   password?: string;
   username?: string;
   photo?: string;
 }
+
+export interface UpdateProfileDto extends Omit<UpdateUserDto, 'password'> {}
+
+export interface ChangePasswordDto extends Pick<UpdateUserDto, 'password'> {}

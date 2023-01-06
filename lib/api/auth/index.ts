@@ -1,5 +1,6 @@
 import { api } from '..';
 import {
+  ChangePasswordDto,
   LoginDto,
   RegisterDto,
   UpdateProfileDto,
@@ -21,4 +22,14 @@ const updateProfile = (updateProfileDto: UpdateProfileDto) => {
   return api.patch('/user/profile', updateProfileDto);
 };
 
-export const AuthApi = { register, login, logout, updateProfile };
+const changePassword = (changePasswordDto: ChangePasswordDto) => {
+  return api.patch('/user/profile/password', changePasswordDto);
+};
+
+export const AuthApi = {
+  register,
+  login,
+  logout,
+  updateProfile,
+  changePassword,
+};

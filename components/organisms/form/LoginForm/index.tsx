@@ -10,7 +10,6 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import ErrorText from '../../../atoms/form/ErrorText/ErrorText';
 import makeErrorMessage from '../../../../lib/helpers/makeErrorMessage';
 import { AuthApi } from '../../../../lib/api/auth';
-import useUser from '../../../../lib/hooks/useUser';
 import { LoginDto } from '../../../../@types/api/auth';
 import { MyApiError } from '../../../../@types/api/api';
 import { BASE_API_URL } from '../../../../lib/api';
@@ -68,7 +67,7 @@ function LoginForm() {
     >
       <h2 className={styles.form__title}>로그인</h2>
       <fieldset className={styles.form__section}>
-        <Label htmlFor="email">Email</Label>
+        <Label htmlFor="email">이메일</Label>
         <Input
           id="email"
           type="email"
@@ -79,7 +78,7 @@ function LoginForm() {
       </fieldset>
 
       <fieldset className={styles.form__section}>
-        <Label htmlFor="password">Password</Label>
+        <Label htmlFor="password">비밀번호</Label>
         <Input
           id="password"
           type="password"
