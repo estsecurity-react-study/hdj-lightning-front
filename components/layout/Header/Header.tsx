@@ -5,8 +5,8 @@ import { AuthApi } from '../../../lib/api/auth';
 import useUser from '../../../lib/hooks/useUser';
 import Button from '../../atoms/form/Button/Button';
 import { Menu, MenuItem, MenuButton } from '@szhsin/react-menu';
-import ProfileSvg from '../../../public/asset/svg/profile.svg';
 import styles from './Header.module.css';
+import Avatar from '../../atoms/profile/Avatar/Avatar';
 
 function Header() {
   const router = useRouter();
@@ -37,13 +37,7 @@ function Header() {
         <div className={styles.profile}>
           <Menu
             menuButton={
-              <article className={styles.profileImage}>
-                <Image
-                  src={user?.photo || ''}
-                  alt={`${user?.username}'s profile Image`}
-                  fill
-                />
-              </article>
+              <Avatar photoSrc={user?.photo} username={user?.username} />
             }
             transition
           >
