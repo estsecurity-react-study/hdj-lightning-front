@@ -27,6 +27,11 @@ function Header() {
     [router],
   );
 
+  const handleClickChangePassword = useCallback(
+    () => router.push('/profile/change-password'),
+    [router],
+  );
+
   const handleClickLogout = useCallback(() => {
     AuthApi.logout().then(() => router.reload());
   }, [router]);
@@ -41,8 +46,12 @@ function Header() {
             }
             transition
           >
-            <MenuItem onClick={handleClickUpdateProfile}>프로필 설정</MenuItem>
-            <MenuItem>설정?</MenuItem>
+            <MenuItem onClick={handleClickUpdateProfile}>프로필 수정</MenuItem>
+            {user?.provider === 'local' && (
+              <MenuItem onClick={handleClickChangePassword}>
+                비밀번호 변경
+              </MenuItem>
+            )}
             <MenuItem>설정?</MenuItem>
           </Menu>
           <div>
