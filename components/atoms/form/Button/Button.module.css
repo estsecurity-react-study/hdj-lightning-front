@@ -9,16 +9,21 @@
   transition: background 150ms ease-out, color 150ms ease-out;
 }
 
+.base:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
 .primary {
   background-color: rgb(var(--lightning-color1));
 }
 
-.primary:hover {
+.primary:hover:enabled {
   background-color: rgba(var(--lightning-color1), 0.6);
   color: rgb(var(--lightning-color4));
 }
 
-.primary:active {
+.primary:active:enabled {
   transition: none;
   background-color: rgba(var(--lightning-color2));
 }
@@ -28,12 +33,12 @@
   color: white;
 }
 
-.submit:hover {
+.submit:hover:enabled {
   background-color: rgba(var(--lightning-color1), 0.6);
   color: rgb(var(--lightning-color4));
 }
 
-.submit:active {
+.submit:active:enabled {
   transition: none;
   background-color: rgba(var(--lightning-color2));
 }
@@ -54,7 +59,7 @@
   color: rgb(var(--lightning-color4));
 }
 
-.text:hover {
+.text:hover:enabled {
   color: rgba(var(--lightning-color4), 0.5);
 }
 
