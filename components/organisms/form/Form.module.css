@@ -1,4 +1,4 @@
-.loginForm {
+.form__container {
   width: 300px;
   display: flex;
   flex-direction: column;
@@ -6,12 +6,12 @@
   padding: 0 1rem;
 }
 
-.loginForm__title {
+.form__title {
   color: rgb(var(--lightning-color4));
   margin-bottom: 2rem;
 }
 
-.loginForm__section {
+.form__section {
   position: relative;
   width: 100%;
   border: none;
@@ -20,7 +20,7 @@
   margin-bottom: 0.8rem;
 }
 
-.loginForm__submitWrapper {
+.form__submitWrapper {
   position: relative;
   display: flex;
   flex-direction: column;
@@ -29,7 +29,7 @@
   margin-top: 1rem;
 }
 
-.loginForm__helperWrapper {
+.form__helperWrapper {
   display: flex;
   flex-direction: column;
   width: 100%;

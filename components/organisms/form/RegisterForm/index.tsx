@@ -8,12 +8,13 @@ import * as yup from 'yup';
 import Button from '../../../atoms/form/Button/Button';
 import Input from '../../../atoms/form/Input/Input';
 import Label from '../../../atoms/form/Label/Label';
-import styles from './RegisterForm.module.css';
 import ErrorText from '../../../atoms/form/ErrorText/ErrorText';
 import makeErrorMessage from '../../../../lib/helpers/makeErrorMessage';
 import { AuthApi } from '../../../../lib/api/auth';
 import { RegisterDto } from '../../../../@types/api/auth';
 import { MyApiError } from '../../../../@types/api/api';
+
+import styles from '../Form.module.css';
 
 interface RegisterFormProps {}
 
@@ -25,7 +26,10 @@ const registerSchema = yup
   .object({
     email: yup.string().email().required(),
     password: yup.string().required(),
-    passwordC: yup.string().required(),
+    passwordC: yup
+      .string()
+      .required()
+      .oneOf([yup.ref('password')], '패스워드가 일치하지 않습니다.'),
     username: yup.string().required(),
   })
   .required();
@@ -43,7 +47,6 @@ function RegisterForm(props: RegisterFormProps) {
 
   const onSubmit: SubmitHandler<RegisterInput> = useCallback(
     (data) => {
-      // TODO: 비밀번호, 비밀번호 확인 유효성 검사 추가
       const { email, password, username } = data;
       AuthApi.register({ email, password, username })
         .then(() => {
@@ -64,11 +67,11 @@ function RegisterForm(props: RegisterFormProps) {
   return (
     <form
       action=""
-      className={styles.registerForm}
+      className={styles.form__container}
       onSubmit={handleSubmit(onSubmit)}
     >
-      <h2 className={styles.registerForm__title}>회원가입</h2>
-      <fieldset className={styles.registerForm__section}>
+      <h2 className={styles.form__title}>회원가입</h2>
+      <fieldset className={styles.form__section}>
         <Label htmlFor="email">이메일</Label>
         <Input
           id="email"
@@ -83,7 +86,7 @@ function RegisterForm(props: RegisterFormProps) {
         </ErrorText>
       </fieldset>
 
-      <fieldset className={styles.registerForm__section}>
+      <fieldset className={styles.form__section}>
         <Label htmlFor="username">이름</Label>
         <Input
           id="username"
@@ -98,7 +101,7 @@ function RegisterForm(props: RegisterFormProps) {
         </ErrorText>
       </fieldset>
 
-      <fieldset className={styles.registerForm__section}>
+      <fieldset className={styles.form__section}>
         <Label htmlFor="password">비밀번호</Label>
         <Input
           id="password"
@@ -109,7 +112,7 @@ function RegisterForm(props: RegisterFormProps) {
         <ErrorText>{makeErrorMessage(errors.password)}</ErrorText>
       </fieldset>
 
-      <fieldset className={styles.registerForm__section}>
+      <fieldset className={styles.form__section}>
         <Label htmlFor="passwordC">비밀번호 확인</Label>
         <Input
           id="passwordC"
@@ -120,12 +123,12 @@ function RegisterForm(props: RegisterFormProps) {
         <ErrorText>{makeErrorMessage(errors.passwordC)}</ErrorText>
       </fieldset>
 
-      <div className={styles.registerForm__submitWrapper}>
+      <div className={styles.form__submitWrapper}>
         <Button type="submit" kind="submit">
           회원가입
         </Button>
       </div>
-      <div className={styles.registerForm__helperWrapper}>
+      <div className={styles.form__helperWrapper}>
         <Button type="button" kind="text" onClick={handleClickGoToLogin}>
           로그인 하러가기
         </Button>

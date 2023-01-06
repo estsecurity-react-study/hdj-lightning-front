@@ -8,7 +8,6 @@ import * as yup from 'yup';
 import Button from '../../../atoms/form/Button/Button';
 import Input from '../../../atoms/form/Input/Input';
 import Label from '../../../atoms/form/Label/Label';
-import styles from './ProfileForm.module.css';
 import ErrorText from '../../../atoms/form/ErrorText/ErrorText';
 import makeErrorMessage from '../../../../lib/helpers/makeErrorMessage';
 import { AuthApi } from '../../../../lib/api/auth';
@@ -16,6 +15,7 @@ import { UpdateProfileDto } from '../../../../@types/api/auth';
 import { MyApiError } from '../../../../@types/api/api';
 import useUser from '../../../../lib/hooks/useUser';
 
+import styles from '../Form.module.css';
 
 interface ProfileInput extends Omit<UpdateProfileDto, 'password'> {}
 
@@ -27,7 +27,6 @@ const ProfileSchema = yup
 
 const initInput: UpdateProfileDto = {
   username: '',
-  password: '',
   photo: '',
 };
 
@@ -51,14 +50,14 @@ function ProfileForm() {
     (data) => {
       const { username, photo } = data;
       console.log(data);
-      //   AuthApi.updateProfile({ password, username })
-      //     .then(() => {
-      //       router.push('/');
-      //       reset();
-      //     })
-      //     .catch((err: MyApiError) => {
-      //       alert(err.response?.data.message);
-      //     });
+      AuthApi.updateProfile({ username })
+        .then(() => {
+          router.push('/');
+          reset();
+        })
+        .catch((err: MyApiError) => {
+          alert(err.response?.data.message);
+        });
     },
     [router],
   );
@@ -70,12 +69,12 @@ function ProfileForm() {
   return (
     <form
       action=""
-      className={styles.profileForm}
+      className={styles.form__container}
       onSubmit={handleSubmit(onSubmit)}
     >
-      <h2 className={styles.profileForm__title}>프로필 수정</h2>
+      <h2 className={styles.form__title}>프로필 수정</h2>
 
-      <fieldset className={styles.profileForm__section}>
+      <fieldset className={styles.form__section}>
         <Label htmlFor="username">이름</Label>
         <Input
           id="username"
@@ -86,7 +85,7 @@ function ProfileForm() {
         <ErrorText>{makeErrorMessage(errors.username)}</ErrorText>
       </fieldset>
 
-      <div className={styles.profileForm__submitWrapper}>
+      <div className={styles.form__submitWrapper}>
         <Button
           type="submit"
           disabled={Object.keys(dirtyFields).length < 1}
