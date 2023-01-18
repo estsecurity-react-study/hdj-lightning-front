@@ -89,7 +89,7 @@ function PasswordForm() {
       <div className={styles.form__submitWrapper}>
         <Button
           type="submit"
-          kind={isDirty ? 'primary' : 'submit'}
+          kind={isDirty ? 'submit' : 'ghost'}
           disabled={!isDirty}
         >
           비밀번호 변경

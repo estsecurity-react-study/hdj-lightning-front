@@ -88,7 +88,7 @@ function PrePasswordForm({ onSuccess }: PrePasswordFormProps) {
       <div className={styles.form__submitWrapper}>
         <Button
           type="submit"
-          kind={isDirty ? 'primary' : 'submit'}
+          kind={isDirty ? 'submit' : 'ghost'}
           disabled={!isDirty}
         >
           인증

@@ -89,7 +89,7 @@ function ProfileForm() {
         <Button
           type="submit"
           disabled={Object.keys(dirtyFields).length < 1}
-          kind={Object.keys(dirtyFields).length >= 1 ? 'primary' : 'submit'}
+          kind={Object.keys(dirtyFields).length >= 1 ? 'submit' : 'ghost'}
         >
           프로필 수정
         </Button>
