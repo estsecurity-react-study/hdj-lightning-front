@@ -16,6 +16,11 @@ import { BASE_API_URL } from '../../../../lib/api';
 
 import styles from '../Form.module.css';
 
+interface LoginFormProps {
+  onSubmit?: () => void;
+  redirectSuccessUrl?: string;
+}
+
 interface LoginInput extends LoginDto {}
 
 const loginSchema = yup.object({
@@ -23,7 +28,10 @@ const loginSchema = yup.object({
   password: yup.string().required(),
 });
 
-function LoginForm() {
+function LoginForm({
+  onSubmit: onSubmitProps,
+  redirectSuccessUrl,
+}: LoginFormProps) {
   const router = useRouter();
   const {
     register,
@@ -37,7 +45,8 @@ function LoginForm() {
       try {
         const res = await AuthApi.login(data as LoginDto);
         if (res) {
-          router.replace('/');
+          onSubmitProps?.();
+          router.replace(redirectSuccessUrl || '/');
         }
       } catch (error) {
         alert((error as MyApiError).response?.data.message);

@@ -5,7 +5,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 4rem;
+  padding: 5rem;
 }
 
 .title {
@@ -39,7 +39,12 @@
   animation: cloudMoving1 7s linear infinite;
 }
 
-.cloudWrapper:last-child {
+.cloudWrapper.top {
+  bottom: auto;
+  top: -38px;
+}
+
+.cloudWrapper.after {
   left: calc(100% - 20px);
   animation: cloudMoving2 7s linear infinite;
 }
