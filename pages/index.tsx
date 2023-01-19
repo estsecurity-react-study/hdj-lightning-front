@@ -37,12 +37,13 @@ export default function Home() {
   const handleClickCTA = useCallback(() => {
     if (!isLogin) {
       // TODO: 로그인 완료 후에 모임 만드는 페이지로 한번 더 리다이렉트
-      router.push('/auth/login');
+      router.push('/auth/login?goal=/rooms');
       return;
     }
 
     // next
     console.log('make Room!');
+    router.push('/rooms');
   }, [router, isLogin]);
 
   return (
