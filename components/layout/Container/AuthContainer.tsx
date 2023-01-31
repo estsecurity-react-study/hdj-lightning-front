@@ -1,7 +1,5 @@
-import { useRouter } from 'next/router';
 import { PropsWithChildren, useCallback } from 'react';
 import useUser from '../../../lib/hooks/useUser';
-import Button from '../../atoms/form/Button/Button';
 import AuthGuard from '../../organisms/guards/AuthGuard';
 import LoadingGuard from '../../organisms/guards/LoadingGuard';
 import styles from './Container.module.css';

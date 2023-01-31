@@ -57,7 +57,7 @@ function PrePasswordForm({ onSuccess }: PrePasswordFormProps) {
         reset();
       }
     },
-    [router],
+    [router, onSuccess, user?.email, reset],
   );
 
   return (

@@ -53,7 +53,7 @@ function PasswordForm() {
         reset();
       }
     },
-    [router],
+    [router, reset],
   );
 
   return (
