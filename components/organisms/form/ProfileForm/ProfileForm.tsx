@@ -48,7 +48,10 @@ function ProfileForm() {
 
   const onSubmit: SubmitHandler<ProfileInput> = useCallback(
     (data) => {
-      const { username, photo } = data;
+      const {
+        username,
+        // photo
+      } = data;
       console.log(data);
       AuthApi.updateProfile({ username })
         .then(() => {
@@ -59,7 +62,7 @@ function ProfileForm() {
           alert(err.response?.data.message);
         });
     },
-    [router],
+    [router, reset],
   );
 
   useEffect(() => {

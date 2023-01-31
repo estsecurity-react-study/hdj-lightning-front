@@ -44,7 +44,7 @@ function LoginForm() {
         resetField('password');
       }
     },
-    [router],
+    [router, resetField],
   );
 
   const handleClickLoginGoogle = useCallback(() => {
