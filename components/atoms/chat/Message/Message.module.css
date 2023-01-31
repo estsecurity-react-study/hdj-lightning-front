@@ -1,0 +1,11 @@
+.container {
+  max-width: 50%;
+  overflow-wrap: break-word;
+  padding: 0.7rem 1.2rem;
+  background-color: rgb(var(--lightning-color1));
+  border-radius: 8px;
+}
+
+.container.me {
+  float: right;
+}
