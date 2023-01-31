@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import { useCallback, useEffect } from 'react';
+import { useCallback } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -15,8 +15,6 @@ import { RegisterDto } from '../../../../@types/api/auth';
 import { MyApiError } from '../../../../@types/api/api';
 
 import styles from '../Form.module.css';
-
-interface RegisterFormProps {}
 
 interface RegisterInput extends RegisterDto {
   passwordC: string;
@@ -34,7 +32,7 @@ const registerSchema = yup
   })
   .required();
 
-function RegisterForm(props: RegisterFormProps) {
+function RegisterForm() {
   const router = useRouter();
   const {
     register,
@@ -57,7 +55,7 @@ function RegisterForm(props: RegisterFormProps) {
           alert(err.response?.data.message);
         });
     },
-    [router],
+    [router, reset],
   );
 
   const handleClickGoToLogin = useCallback(() => {

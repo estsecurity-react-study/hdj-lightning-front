@@ -1,10 +1,9 @@
-import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useCallback } from 'react';
 import { AuthApi } from '../../../lib/api/auth';
 import useUser from '../../../lib/hooks/useUser';
 import Button from '../../atoms/form/Button/Button';
-import { Menu, MenuItem, MenuButton } from '@szhsin/react-menu';
+import { Menu, MenuItem } from '@szhsin/react-menu';
 import styles from './Header.module.css';
 import Avatar from '../../atoms/profile/Avatar/Avatar';
 
