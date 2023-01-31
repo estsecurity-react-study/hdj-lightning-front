@@ -44,38 +44,6 @@ function AuthGuard() {
         <div className={styles.cloud} />
         <div className={styles.cloud} />
       </section>
-
-      <section className={`${styles.cloudWrapper} ${styles.top}`}>
-        <div className={styles.cloud} />
-        <div className={styles.cloud} />
-        <div className={styles.cloud} />
-        <div className={styles.cloud} />
-        <div className={styles.cloud} />
-        <div className={styles.cloud} />
-        <div className={styles.cloud} />
-        <div className={styles.cloud} />
-        <div className={styles.cloud} />
-        <div className={styles.cloud} />
-        <div className={styles.cloud} />
-        <div className={styles.cloud} />
-      </section>
-
-      <section
-        className={`${styles.cloudWrapper} ${styles.top} ${styles.after}`}
-      >
-        <div className={styles.cloud} />
-        <div className={styles.cloud} />
-        <div className={styles.cloud} />
-        <div className={styles.cloud} />
-        <div className={styles.cloud} />
-        <div className={styles.cloud} />
-        <div className={styles.cloud} />
-        <div className={styles.cloud} />
-        <div className={styles.cloud} />
-        <div className={styles.cloud} />
-        <div className={styles.cloud} />
-        <div className={styles.cloud} />
-      </section>
     </div>
   );
 }
