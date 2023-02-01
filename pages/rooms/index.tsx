@@ -1,49 +1,25 @@
 import { NextPage } from 'next';
-import { useCallback, useEffect, useState } from 'react';
+import { ChangeEvent, useCallback, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { io } from 'socket.io-client';
+import MessageBox from '../../components/atoms/chat/Message/Message';
 import AuthContainer from '../../components/layout/Container/AuthContainer';
-
-const socket = io('http://localhost:3001/chat', {
-  transports: ['websocket'],
-});
-
-interface Chat {
-  text: string;
-  isMe: boolean;
-  time: Date;
-}
-
-interface Message {
-  text: string;
-  sender: string;
-  time: Date;
-}
+import useChat from '../../lib/hooks/useChat';
+import useUser from '../../lib/hooks/useUser';
 
 const RoomsPage: NextPage = () => {
-  const { register, handleSubmit, reset } = useForm<{ text: string }>();
-  const [chatStack, setChatStack] = useState<Chat[]>([]);
+  const { user } = useUser();
+  const { register, handleSubmit, reset, setValue } = useForm<{
+    text: string;
+  }>();
+  const { messages, sendMessage } = useChat({ user });
 
-  const pushChat = useCallback((message: Message) => {
-    const { text, sender, time } = message;
-    setChatStack((prevStack) =>
-      prevStack.concat({ text, isMe: sender === socket.id, time }),
-    );
-  }, []);
-
-  const onSubmit: SubmitHandler<{ text: string }> = useCallback((data) => {
-    console.log(data);
-    socket.emit('clientSend', data);
-    reset();
-  }, []);
-
-  useEffect(() => {
-    socket.on('serverSend', pushChat);
-
-    return () => {
-      socket.off('serverSend', pushChat);
-    };
-  }, []);
+  const onSubmit: SubmitHandler<{ text: string }> = useCallback(
+    ({ text }) => {
+      sendMessage(text);
+      setValue('text', '');
+    },
+    [sendMessage, setValue],
+  );
 
   return (
     <AuthContainer>
@@ -59,17 +35,9 @@ const RoomsPage: NextPage = () => {
           overflow: 'hidden',
         }}
       >
-        {chatStack.map(({ text, isMe }) => (
-          <div
-            style={{
-              width: '100%',
-              padding: '.5rem',
-              paddingBottom: '.2rem',
-              borderBottom: '1px solid gray',
-              textAlign: isMe ? 'right' : 'left',
-            }}
-          >
-            {text}
+        {messages.map(({ text, isMe, time }, index) => (
+          <div key={`${time}_${index}`}>
+            <MessageBox me={isMe}>{text}</MessageBox>
           </div>
         ))}
       </div>
