@@ -1,14 +1,19 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import useSWR from 'swr';
 import { io, Socket } from 'socket.io-client';
 import { UserProfile } from '../../@types/api/response';
 
-export interface Message {
+interface Message {
+  id: number;
   text: string;
-  senderId: number | string;
-  time: Date;
+  user: Pick<UserProfile, 'id' | 'username' | 'photo'>;
+  createAt: Date;
 }
 
-type SendMessage = Pick<Message, 'text' | 'senderId'>;
+interface SendMessage {
+  text: string;
+  senderId: number;
+}
 
 interface NamespaceSpecificClientToServerEvents {
   clientSend: (message: SendMessage) => void;
@@ -38,16 +43,31 @@ const socket: Socket<
 });
 
 const useChat = ({ user, onReceive, onSend }: UseChatOptions) => {
+  const { data, isLoading } = useSWR<Message[]>('chat/messages/all');
   const [messages, setMessages] = useState<Chat[]>([]);
+
+  const preMessages: Chat[] = useMemo(() => {
+    if (!data) return [];
+    console.log('messages!', data);
+    return data.map(({ text, createAt, user: { id } }) => ({
+      text,
+      isMe: user?.id === id,
+      time: `${createAt}`,
+    }));
+  }, [data, user?.id]);
 
   const receiveMessage = useCallback(
     (message: Message) => {
-      const { text, senderId, time } = message;
+      const {
+        text,
+        user: { id },
+        createAt,
+      } = message;
       setMessages((prevMessages) =>
         prevMessages.concat({
           text,
-          isMe: senderId === user?.id,
-          time: `${time}`,
+          isMe: id === user?.id,
+          time: `${createAt}`,
         }),
       );
       onReceive?.();
@@ -59,7 +79,7 @@ const useChat = ({ user, onReceive, onSend }: UseChatOptions) => {
     (messageText: string) => {
       socket.emit('clientSend', {
         text: messageText,
-        senderId: user?.id || '',
+        senderId: user?.id || 0,
       });
       onSend?.(messageText);
     },
@@ -74,7 +94,11 @@ const useChat = ({ user, onReceive, onSend }: UseChatOptions) => {
     };
   }, [receiveMessage]);
 
-  return { sendMessage, messages, setMessages };
+  useEffect(() => {
+    setMessages((prevMessages) => preMessages.concat(prevMessages));
+  }, [preMessages]);
+
+  return { sendMessage, setMessages, messages, isLoading };
 };
 
 export default useChat;

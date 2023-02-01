@@ -1,11 +1,13 @@
 .container {
+  display: inline-block;
   max-width: 50%;
   overflow-wrap: break-word;
   padding: 0.7rem 1.2rem;
-  background-color: rgb(var(--lightning-color1));
+  background-color: #fff;
   border-radius: 8px;
 }
 
 .container.me {
+  background-color: rgb(var(--lightning-color1));
   float: right;
 }

@@ -1,5 +1,5 @@
 import { NextPage } from 'next';
-import { ChangeEvent, useCallback, useState } from 'react';
+import { useCallback } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import MessageBox from '../../components/atoms/chat/Message/Message';
 import AuthContainer from '../../components/layout/Container/AuthContainer';
@@ -8,7 +8,7 @@ import useUser from '../../lib/hooks/useUser';
 
 const RoomsPage: NextPage = () => {
   const { user } = useUser();
-  const { register, handleSubmit, reset, setValue } = useForm<{
+  const { register, handleSubmit, setValue } = useForm<{
     text: string;
   }>();
   const { messages, sendMessage } = useChat({ user });
