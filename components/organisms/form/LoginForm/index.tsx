@@ -15,18 +15,14 @@ import { MyApiError } from '../../../../@types/api/api';
 import { BASE_API_URL } from '../../../../lib/api';
 
 import styles from '../Form.module.css';
+import { loginSchema } from '../../../../lib/api/schema';
 
 interface LoginFormProps {
   onSubmit?: () => void;
   redirectSuccessUrl?: string;
 }
 
-interface LoginInput extends LoginDto {}
-
-const loginSchema = yup.object({
-  email: yup.string().email().required(),
-  password: yup.string().required(),
-});
+type LoginInput = yup.InferType<typeof loginSchema>;
 
 function LoginForm({
   onSubmit: onSubmitProps,
@@ -53,7 +49,7 @@ function LoginForm({
         resetField('password');
       }
     },
-    [router, resetField],
+    [router, redirectSuccessUrl, onSubmitProps, resetField],
   );
 
   const handleClickLoginGoogle = useCallback(() => {

@@ -11,26 +11,12 @@ import Label from '../../../atoms/form/Label/Label';
 import ErrorText from '../../../atoms/form/ErrorText/ErrorText';
 import makeErrorMessage from '../../../../lib/helpers/makeErrorMessage';
 import { AuthApi } from '../../../../lib/api/auth';
-import { RegisterDto } from '../../../../@types/api/auth';
 import { MyApiError } from '../../../../@types/api/api';
+import { registerSchema } from '../../../../lib/api/schema';
 
 import styles from '../Form.module.css';
 
-interface RegisterInput extends RegisterDto {
-  passwordC: string;
-}
-
-const registerSchema = yup
-  .object({
-    email: yup.string().email().required(),
-    password: yup.string().required(),
-    passwordC: yup
-      .string()
-      .required()
-      .oneOf([yup.ref('password')], '패스워드가 일치하지 않습니다.'),
-    username: yup.string().required(),
-  })
-  .required();
+type RegisterInput = yup.InferType<typeof registerSchema>;
 
 function RegisterForm() {
   const router = useRouter();
@@ -111,14 +97,14 @@ function RegisterForm() {
       </fieldset>
 
       <fieldset className={styles.form__section}>
-        <Label htmlFor="passwordC">비밀번호 확인</Label>
+        <Label htmlFor="passwordConfirm">비밀번호 확인</Label>
         <Input
-          id="passwordC"
+          id="passwordConfirm"
           type="password"
           placeholder="사용하실 비밀번호를 한번 더 적어주세요."
-          {...register('passwordC')}
+          {...register('passwordConfirm')}
         />
-        <ErrorText>{makeErrorMessage(errors.passwordC)}</ErrorText>
+        <ErrorText>{makeErrorMessage(errors.passwordConfirm)}</ErrorText>
       </fieldset>
 
       <div className={styles.form__submitWrapper}>

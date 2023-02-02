@@ -11,23 +11,17 @@ import Label from '../../../atoms/form/Label/Label';
 import ErrorText from '../../../atoms/form/ErrorText/ErrorText';
 import makeErrorMessage from '../../../../lib/helpers/makeErrorMessage';
 import { AuthApi } from '../../../../lib/api/auth';
-import { UpdateProfileDto } from '../../../../@types/api/auth';
 import { MyApiError } from '../../../../@types/api/api';
 import useUser from '../../../../lib/hooks/useUser';
 
 import styles from '../Form.module.css';
+import { profileSchema } from '../../../../lib/api/schema';
 
-interface ProfileInput extends UpdateProfileDto {}
+type ProfileInput = yup.InferType<typeof profileSchema>;
 
-const ProfileSchema = yup
-  .object({
-    username: yup.string().required(),
-  })
-  .required();
-
-const initInput: UpdateProfileDto = {
+const initInput: ProfileInput = {
   username: '',
-  photo: '',
+  // photo: '',
 };
 
 function ProfileForm() {
@@ -43,7 +37,7 @@ function ProfileForm() {
       ...initInput,
       ...user,
     },
-    resolver: yupResolver(ProfileSchema),
+    resolver: yupResolver(profileSchema),
   });
 
   const onSubmit: SubmitHandler<ProfileInput> = useCallback(

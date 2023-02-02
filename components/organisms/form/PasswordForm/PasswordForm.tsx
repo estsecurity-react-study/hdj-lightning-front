@@ -4,8 +4,6 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 
-import { ChangePasswordDto } from '../../../../@types/api/auth';
-
 import { useCallback } from 'react';
 import { AuthApi } from '../../../../lib/api/auth';
 import { MyApiError } from '../../../../@types/api/api';
@@ -14,20 +12,12 @@ import Input from '../../../atoms/form/Input/Input';
 import makeErrorMessage from '../../../../lib/helpers/makeErrorMessage';
 import ErrorText from '../../../atoms/form/ErrorText/ErrorText';
 import Button from '../../../atoms/form/Button/Button';
+import { changePasswordSchema } from '../../../../lib/api/schema';
 
 import styles from '../Form.module.css';
 
-const changePasswordSchema = yup.object({
-  password: yup.string().required(),
-  passwordC: yup
-    .string()
-    .required()
-    .oneOf([yup.ref('password')], '비밀번호가 위와 불일치합니다!'),
-});
-
-interface ChangePasswordInput extends ChangePasswordDto {
-  passwordC: string;
-}
+interface ChangePasswordInput
+  extends yup.InferType<typeof changePasswordSchema> {}
 
 function PasswordForm() {
   const router = useRouter();
@@ -37,7 +27,7 @@ function PasswordForm() {
     reset,
     formState: { errors, isDirty },
   } = useForm<ChangePasswordInput>({
-    defaultValues: { password: '', passwordC: '' },
+    defaultValues: { password: '', passwordConfirm: '' },
     resolver: yupResolver(changePasswordSchema),
   });
 
@@ -76,14 +66,14 @@ function PasswordForm() {
       </fieldset>
 
       <fieldset className={styles.form__section}>
-        <Label htmlFor="passwordC">비밀번호 확인</Label>
+        <Label htmlFor="passwordConfirm">비밀번호 확인</Label>
         <Input
-          id="passwordC"
+          id="passwordConfirm"
           type="password"
           placeholder="변경하실 비밀번호를 한번 더 적어주세요."
-          {...register('passwordC')}
+          {...register('passwordConfirm')}
         />
-        <ErrorText>{makeErrorMessage(errors.passwordC)}</ErrorText>
+        <ErrorText>{makeErrorMessage(errors.passwordConfirm)}</ErrorText>
       </fieldset>
 
       <div className={styles.form__submitWrapper}>

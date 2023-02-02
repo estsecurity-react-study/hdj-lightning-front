@@ -3,9 +3,6 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
-
-import { LoginDto } from '../../../../@types/api/auth';
-
 import { useCallback } from 'react';
 import { AuthApi } from '../../../../lib/api/auth';
 import { MyApiError } from '../../../../@types/api/api';
@@ -15,19 +12,16 @@ import Input from '../../../atoms/form/Input/Input';
 import makeErrorMessage from '../../../../lib/helpers/makeErrorMessage';
 import ErrorText from '../../../atoms/form/ErrorText/ErrorText';
 import Button from '../../../atoms/form/Button/Button';
+import { validatePasswordSchema } from '../../../../lib/api/schema';
 
 import Locker from '../../../../public/asset/svg/lock-icon.svg';
 import styles from '../Form.module.css';
-
-const validatePasswordSchema = yup.object({
-  password: yup.string().required(),
-});
 
 interface PrePasswordFormProps {
   onSuccess: () => void;
 }
 
-interface ValidatePasswordInput extends Pick<LoginDto, 'password'> {}
+type ValidatePasswordInput = yup.InferType<typeof validatePasswordSchema>;
 
 function PrePasswordForm({ onSuccess }: PrePasswordFormProps) {
   const { user } = useUser();
