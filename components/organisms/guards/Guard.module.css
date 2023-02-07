@@ -5,7 +5,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 4rem;
+  padding: 5rem;
 }
 
 .title {
@@ -16,18 +16,22 @@
 @keyframes cloudMoving1 {
   0% {
     left: 0%;
+    /* transform: translateX(0%); */
   }
   100% {
     left: calc(-100% + 20px);
+    /* transform: translateX(-100%); */
   }
 }
 
 @keyframes cloudMoving2 {
   0% {
     left: calc(100% - 20px);
+    /* transform: translateX(100%); */
   }
   100% {
     left: 0%;
+    /* transform: translateX(0%); */
   }
 }
 
@@ -36,11 +40,13 @@
   display: flex;
   bottom: -38px;
   left: 0%;
+  /* transform: translateX(0%); */
   animation: cloudMoving1 7s linear infinite;
 }
 
-.cloudWrapper:last-child {
+.cloudWrapper.after {
   left: calc(100% - 20px);
+  /* transform: translateX(100%); */
   animation: cloudMoving2 7s linear infinite;
 }
 

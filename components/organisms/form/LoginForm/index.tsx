@@ -15,21 +15,25 @@ import { MyApiError } from '../../../../@types/api/api';
 import { BASE_API_URL } from '../../../../lib/api';
 
 import styles from '../Form.module.css';
+import { loginSchema } from '../../../../lib/api/schema';
 
-interface LoginInput extends LoginDto {}
+interface LoginFormProps {
+  onSubmit?: () => void;
+  redirectSuccessUrl?: string;
+}
 
-const loginSchema = yup.object({
-  email: yup.string().email().required(),
-  password: yup.string().required(),
-});
+type LoginInput = yup.InferType<typeof loginSchema>;
 
-function LoginForm() {
+function LoginForm({
+  onSubmit: onSubmitProps,
+  redirectSuccessUrl,
+}: LoginFormProps) {
   const router = useRouter();
   const {
     register,
     handleSubmit,
     resetField,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<LoginInput>({ resolver: yupResolver(loginSchema) });
 
   const onSubmit: SubmitHandler<LoginInput> = useCallback(
@@ -37,14 +41,15 @@ function LoginForm() {
       try {
         const res = await AuthApi.login(data as LoginDto);
         if (res) {
-          router.replace('/');
+          onSubmitProps?.();
+          router.replace(redirectSuccessUrl || '/');
         }
       } catch (error) {
         alert((error as MyApiError).response?.data.message);
         resetField('password');
       }
     },
-    [router, resetField],
+    [router, redirectSuccessUrl, onSubmitProps, resetField],
   );
 
   const handleClickLoginGoogle = useCallback(() => {
@@ -72,6 +77,7 @@ function LoginForm() {
           id="email"
           type="email"
           placeholder="example@email.com"
+          disabled={isSubmitting}
           {...register('email')}
         />
         <ErrorText>{makeErrorMessage(errors.email)}</ErrorText>
@@ -83,24 +89,40 @@ function LoginForm() {
           id="password"
           type="password"
           placeholder="비밀번호를 적어주세요."
+          disabled={isSubmitting}
           {...register('password')}
         />
         <ErrorText>{makeErrorMessage(errors.password)}</ErrorText>
       </fieldset>
 
       <div className={styles.form__submitWrapper}>
-        <Button type="submit" kind="submit">
+        <Button type="submit" kind="submit" disabled={isSubmitting}>
           로그인
         </Button>
-        <Button type="button" kind="submit" onClick={handleClickLoginGoogle}>
+        <Button
+          type="button"
+          kind="submit"
+          disabled={isSubmitting}
+          onClick={handleClickLoginGoogle}
+        >
           Google
         </Button>
       </div>
       <div className={styles.form__helperWrapper}>
-        <Button type="button" kind="text" onClick={handleClickForgotPassword}>
+        <Button
+          type="button"
+          kind="text"
+          disabled={isSubmitting}
+          onClick={handleClickForgotPassword}
+        >
           비밀번호를 잊으셨나요?
         </Button>
-        <Button type="button" kind="text" onClick={handleClickNotAccount}>
+        <Button
+          type="button"
+          kind="text"
+          disabled={isSubmitting}
+          onClick={handleClickNotAccount}
+        >
           계정이 없으신가요?
         </Button>
       </div>

@@ -11,23 +11,17 @@ import Label from '../../../atoms/form/Label/Label';
 import ErrorText from '../../../atoms/form/ErrorText/ErrorText';
 import makeErrorMessage from '../../../../lib/helpers/makeErrorMessage';
 import { AuthApi } from '../../../../lib/api/auth';
-import { UpdateProfileDto } from '../../../../@types/api/auth';
 import { MyApiError } from '../../../../@types/api/api';
 import useUser from '../../../../lib/hooks/useUser';
 
 import styles from '../Form.module.css';
+import { profileSchema } from '../../../../lib/api/schema';
 
-interface ProfileInput extends UpdateProfileDto {}
+type ProfileInput = yup.InferType<typeof profileSchema>;
 
-const ProfileSchema = yup
-  .object({
-    username: yup.string().required(),
-  })
-  .required();
-
-const initInput: UpdateProfileDto = {
+const initInput: ProfileInput = {
   username: '',
-  photo: '',
+  // photo: '',
 };
 
 function ProfileForm() {
@@ -37,13 +31,13 @@ function ProfileForm() {
     register,
     handleSubmit,
     reset,
-    formState: { errors, isDirty, dirtyFields },
+    formState: { errors, isDirty, dirtyFields, isSubmitting },
   } = useForm<ProfileInput>({
     defaultValues: {
       ...initInput,
       ...user,
     },
-    resolver: yupResolver(ProfileSchema),
+    resolver: yupResolver(profileSchema),
   });
 
   const onSubmit: SubmitHandler<ProfileInput> = useCallback(
@@ -83,6 +77,7 @@ function ProfileForm() {
           id="username"
           type="text"
           placeholder="변경하실 닉네임을 적어주세요."
+          disabled={isSubmitting}
           {...register('username')}
         />
         <ErrorText>{makeErrorMessage(errors.username)}</ErrorText>
@@ -91,7 +86,7 @@ function ProfileForm() {
       <div className={styles.form__submitWrapper}>
         <Button
           type="submit"
-          disabled={Object.keys(dirtyFields).length < 1}
+          disabled={Object.keys(dirtyFields).length < 1 || isSubmitting}
           kind={Object.keys(dirtyFields).length >= 1 ? 'submit' : 'ghost'}
         >
           프로필 수정

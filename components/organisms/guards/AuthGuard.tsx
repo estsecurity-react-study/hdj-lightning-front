@@ -7,7 +7,7 @@ function AuthGuard() {
   const router = useRouter();
 
   const handleClickLogin = useCallback(() => {
-    router.push('/auth/login');
+    router.push(`/auth/login?goal=${router.pathname}`);
   }, [router]);
 
   return (
@@ -15,7 +15,7 @@ function AuthGuard() {
       <h3 className={styles.title}>로그인이 필요합니다.</h3>
       <Button onClick={handleClickLogin}>로그인 하러가기</Button>
 
-      <section className={styles.cloudWrapper}>
+      <section className={`${styles.cloudWrapper}`}>
         <div className={styles.cloud} />
         <div className={styles.cloud} />
         <div className={styles.cloud} />
@@ -30,7 +30,7 @@ function AuthGuard() {
         <div className={styles.cloud} />
       </section>
 
-      <section className={styles.cloudWrapper}>
+      <section className={`${styles.cloudWrapper} ${styles.after}`}>
         <div className={styles.cloud} />
         <div className={styles.cloud} />
         <div className={styles.cloud} />

@@ -8,6 +8,3 @@ export const api = axios.create({
 });
 
 export const fetcher = (url: string) => api.get(url).then((res) => res.data);
-
-// interceptor로 요청 시 마다 헤더에 token 가져와서 등록.
-// 결국 token은 어디에? ㅋ ㅋ ㅋ ㅋ

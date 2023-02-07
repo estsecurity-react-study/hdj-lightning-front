@@ -16,7 +16,7 @@ const LoginPage: NextPage = () => {
   return (
     <div className={styles.container}>
       <div className={styles.wrapper}>
-        <LoginForm />
+        <LoginForm redirectSuccessUrl={(router.query.goal as string) || ''} />
         <article onDoubleClick={handleClickLogo}>
           <LightningLogo className={styles.art} />
         </article>

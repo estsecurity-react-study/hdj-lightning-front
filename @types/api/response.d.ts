@@ -14,3 +14,9 @@ export interface UserProfile {
   createAt: string;
   updateAt: string;
 }
+
+export interface Message {
+  text: string;
+  user: Pick<UserProfile, 'id' | 'username' | 'photo'>;
+  createAt: Date;
+}
