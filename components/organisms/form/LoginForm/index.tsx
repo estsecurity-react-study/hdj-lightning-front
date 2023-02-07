@@ -33,7 +33,7 @@ function LoginForm({
     register,
     handleSubmit,
     resetField,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<LoginInput>({ resolver: yupResolver(loginSchema) });
 
   const onSubmit: SubmitHandler<LoginInput> = useCallback(
@@ -77,6 +77,7 @@ function LoginForm({
           id="email"
           type="email"
           placeholder="example@email.com"
+          disabled={isSubmitting}
           {...register('email')}
         />
         <ErrorText>{makeErrorMessage(errors.email)}</ErrorText>
@@ -88,24 +89,40 @@ function LoginForm({
           id="password"
           type="password"
           placeholder="비밀번호를 적어주세요."
+          disabled={isSubmitting}
           {...register('password')}
         />
         <ErrorText>{makeErrorMessage(errors.password)}</ErrorText>
       </fieldset>
 
       <div className={styles.form__submitWrapper}>
-        <Button type="submit" kind="submit">
+        <Button type="submit" kind="submit" disabled={isSubmitting}>
           로그인
         </Button>
-        <Button type="button" kind="submit" onClick={handleClickLoginGoogle}>
+        <Button
+          type="button"
+          kind="submit"
+          disabled={isSubmitting}
+          onClick={handleClickLoginGoogle}
+        >
           Google
         </Button>
       </div>
       <div className={styles.form__helperWrapper}>
-        <Button type="button" kind="text" onClick={handleClickForgotPassword}>
+        <Button
+          type="button"
+          kind="text"
+          disabled={isSubmitting}
+          onClick={handleClickForgotPassword}
+        >
           비밀번호를 잊으셨나요?
         </Button>
-        <Button type="button" kind="text" onClick={handleClickNotAccount}>
+        <Button
+          type="button"
+          kind="text"
+          disabled={isSubmitting}
+          onClick={handleClickNotAccount}
+        >
           계정이 없으신가요?
         </Button>
       </div>

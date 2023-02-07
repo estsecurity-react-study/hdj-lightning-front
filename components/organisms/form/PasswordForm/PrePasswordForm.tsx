@@ -31,7 +31,7 @@ function PrePasswordForm({ onSuccess }: PrePasswordFormProps) {
     register,
     handleSubmit,
     reset,
-    formState: { errors, isDirty },
+    formState: { errors, isDirty, isSubmitting },
   } = useForm<ValidatePasswordInput>({
     defaultValues: { password: '' },
     resolver: yupResolver(validatePasswordSchema),
@@ -74,6 +74,7 @@ function PrePasswordForm({ onSuccess }: PrePasswordFormProps) {
           id="password"
           type="password"
           placeholder="비밀번호를 적어주세요."
+          disabled={isSubmitting}
           {...register('password')}
         />
         <ErrorText>{makeErrorMessage(errors.password)}</ErrorText>
@@ -83,7 +84,7 @@ function PrePasswordForm({ onSuccess }: PrePasswordFormProps) {
         <Button
           type="submit"
           kind={isDirty ? 'submit' : 'ghost'}
-          disabled={!isDirty}
+          disabled={!isDirty || isSubmitting}
         >
           인증
         </Button>

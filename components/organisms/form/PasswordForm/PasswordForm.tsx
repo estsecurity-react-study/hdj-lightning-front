@@ -25,7 +25,7 @@ function PasswordForm() {
     register,
     handleSubmit,
     reset,
-    formState: { errors, isDirty },
+    formState: { errors, isDirty, isSubmitting },
   } = useForm<ChangePasswordInput>({
     defaultValues: { password: '', passwordConfirm: '' },
     resolver: yupResolver(changePasswordSchema),
@@ -60,6 +60,7 @@ function PasswordForm() {
           id="password"
           type="password"
           placeholder="변경하실 비밀번호를 적어주세요."
+          disabled={isSubmitting}
           {...register('password')}
         />
         <ErrorText>{makeErrorMessage(errors.password)}</ErrorText>
@@ -71,6 +72,7 @@ function PasswordForm() {
           id="passwordConfirm"
           type="password"
           placeholder="변경하실 비밀번호를 한번 더 적어주세요."
+          disabled={isSubmitting}
           {...register('passwordConfirm')}
         />
         <ErrorText>{makeErrorMessage(errors.passwordConfirm)}</ErrorText>

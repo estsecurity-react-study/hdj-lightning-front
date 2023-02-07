@@ -24,7 +24,7 @@ function RegisterForm() {
     register,
     handleSubmit,
     reset,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<RegisterInput>({
     resolver: yupResolver(registerSchema),
   });
@@ -61,6 +61,7 @@ function RegisterForm() {
           id="email"
           type="email"
           placeholder="example@email.com"
+          disabled={isSubmitting}
           {...register('email')}
         />
         <ErrorText>
@@ -76,6 +77,7 @@ function RegisterForm() {
           id="username"
           type="text"
           placeholder="사용할 닉네임을 적어주세요."
+          disabled={isSubmitting}
           {...register('username')}
         />
         <ErrorText>
@@ -91,6 +93,7 @@ function RegisterForm() {
           id="password"
           type="password"
           placeholder="사용하실 비밀번호를 적어주세요."
+          disabled={isSubmitting}
           {...register('password')}
         />
         <ErrorText>{makeErrorMessage(errors.password)}</ErrorText>
@@ -102,18 +105,24 @@ function RegisterForm() {
           id="passwordConfirm"
           type="password"
           placeholder="사용하실 비밀번호를 한번 더 적어주세요."
+          disabled={isSubmitting}
           {...register('passwordConfirm')}
         />
         <ErrorText>{makeErrorMessage(errors.passwordConfirm)}</ErrorText>
       </fieldset>
 
       <div className={styles.form__submitWrapper}>
-        <Button type="submit" kind="submit">
+        <Button type="submit" kind="submit" disabled={isSubmitting}>
           회원가입
         </Button>
       </div>
       <div className={styles.form__helperWrapper}>
-        <Button type="button" kind="text" onClick={handleClickGoToLogin}>
+        <Button
+          type="button"
+          kind="text"
+          disabled={isSubmitting}
+          onClick={handleClickGoToLogin}
+        >
           로그인 하러가기
         </Button>
       </div>

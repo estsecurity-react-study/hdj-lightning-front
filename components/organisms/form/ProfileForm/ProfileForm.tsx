@@ -31,7 +31,7 @@ function ProfileForm() {
     register,
     handleSubmit,
     reset,
-    formState: { errors, isDirty, dirtyFields },
+    formState: { errors, isDirty, dirtyFields, isSubmitting },
   } = useForm<ProfileInput>({
     defaultValues: {
       ...initInput,
@@ -77,6 +77,7 @@ function ProfileForm() {
           id="username"
           type="text"
           placeholder="변경하실 닉네임을 적어주세요."
+          disabled={isSubmitting}
           {...register('username')}
         />
         <ErrorText>{makeErrorMessage(errors.username)}</ErrorText>
@@ -85,7 +86,7 @@ function ProfileForm() {
       <div className={styles.form__submitWrapper}>
         <Button
           type="submit"
-          disabled={Object.keys(dirtyFields).length < 1}
+          disabled={Object.keys(dirtyFields).length < 1 || isSubmitting}
           kind={Object.keys(dirtyFields).length >= 1 ? 'submit' : 'ghost'}
         >
           프로필 수정
