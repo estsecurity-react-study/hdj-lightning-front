@@ -1,20 +1,21 @@
-import { useRouter } from 'next/router';
-import { SubmitHandler, useForm } from 'react-hook-form';
-
-import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { useRouter } from 'next/router';
 import { useCallback } from 'react';
-import { AuthApi } from '../../../../lib/api/auth';
-import { MyApiError } from '../../../../@types/api/api';
-import useUser from '../../../../lib/hooks/useUser';
-import Label from '../../../atoms/form/Label/Label';
-import Input from '../../../atoms/form/Input/Input';
-import makeErrorMessage from '../../../../lib/helpers/makeErrorMessage';
-import ErrorText from '../../../atoms/form/ErrorText/ErrorText';
-import Button from '../../../atoms/form/Button/Button';
-import { validatePasswordSchema } from '../../../../lib/api/schema';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import * as yup from 'yup';
 
-import Locker from '../../../../public/asset/svg/lock-icon.svg';
+import { MyApiError } from '~types/api/api';
+
+import Button from '@components/atoms/form/Button/Button';
+import ErrorText from '@components/atoms/form/ErrorText/ErrorText';
+import Input from '@components/atoms/form/Input/Input';
+import Label from '@components/atoms/form/Label/Label';
+import { AuthApi } from '@lib/api/auth';
+import { validatePasswordSchema } from '@lib/api/schema';
+import makeErrorMessage from '@lib/helpers/makeErrorMessage';
+import useUser from '@lib/hooks/useUser';
+import Locker from '@public/asset/svg/lock-icon.svg';
+
 import styles from '../Form.module.css';
 
 interface PrePasswordFormProps {

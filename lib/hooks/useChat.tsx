@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import { Socket, io } from 'socket.io-client';
 import useSWR from 'swr';
-import { io, Socket } from 'socket.io-client';
-import { UserProfile } from '../../@types/api/response';
+
+import { UserProfile } from '~types/api/response';
 
 interface Message {
   id: number;

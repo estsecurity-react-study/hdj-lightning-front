@@ -1,14 +1,14 @@
-import Head from 'next/head';
-import styles from '../styles/Home.module.css';
-import LightningLogo from '../public/asset/svg/lightning-icon.svg';
-import ProfileSvg from '../public/asset/svg/profile.svg';
-
-import { useCallback } from 'react';
-import Button from '../components/atoms/form/Button/Button';
-import { useRouter } from 'next/router';
-import useUser from '../lib/hooks/useUser';
 import { motion } from 'framer-motion';
-import { variants } from '../lib/helpers/variants';
+import Head from 'next/head';
+import { useRouter } from 'next/router';
+import { useCallback } from 'react';
+
+import Button from '@components/atoms/form/Button/Button';
+import { variants } from '@lib/helpers/variants';
+import useUser from '@lib/hooks/useUser';
+
+import LightningLogo from '../public/asset/svg/lightning-icon.svg';
+import styles from '../styles/Home.module.css';
 
 const containerVariants = variants({
   hidden: { opacity: 0 },

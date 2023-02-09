@@ -1,21 +1,22 @@
+import { yupResolver } from '@hookform/resolvers/yup';
 import { useRouter } from 'next/router';
 import { useCallback } from 'react';
-import Button from '../../../atoms/form/Button/Button';
-import Input from '../../../atoms/form/Input/Input';
-import Label from '../../../atoms/form/Label/Label';
-
 import { SubmitHandler, useForm } from 'react-hook-form';
 import * as yup from 'yup';
-import { yupResolver } from '@hookform/resolvers/yup';
-import ErrorText from '../../../atoms/form/ErrorText/ErrorText';
-import makeErrorMessage from '../../../../lib/helpers/makeErrorMessage';
-import { AuthApi } from '../../../../lib/api/auth';
-import { LoginDto } from '../../../../@types/api/auth';
-import { MyApiError } from '../../../../@types/api/api';
-import { BASE_API_URL } from '../../../../lib/api';
+
+import { MyApiError } from '~types/api/api';
+import { LoginDto } from '~types/api/auth';
+
+import Button from '@components/atoms/form/Button/Button';
+import ErrorText from '@components/atoms/form/ErrorText/ErrorText';
+import Input from '@components/atoms/form/Input/Input';
+import Label from '@components/atoms/form/Label/Label';
+import { BASE_API_URL } from '@lib/api';
+import { AuthApi } from '@lib/api/auth';
+import { loginSchema } from '@lib/api/schema';
+import makeErrorMessage from '@lib/helpers/makeErrorMessage';
 
 import styles from '../Form.module.css';
-import { loginSchema } from '../../../../lib/api/schema';
 
 interface LoginFormProps {
   onSubmit?: () => void;

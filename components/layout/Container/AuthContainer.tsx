@@ -1,7 +1,9 @@
 import { PropsWithChildren, useCallback } from 'react';
-import useUser from '../../../lib/hooks/useUser';
-import AuthGuard from '../../organisms/guards/AuthGuard';
-import LoadingGuard from '../../organisms/guards/LoadingGuard';
+
+import AuthGuard from '@components/organisms/guards/AuthGuard';
+import LoadingGuard from '@components/organisms/guards/LoadingGuard';
+import useUser from '@lib/hooks/useUser';
+
 import styles from './Container.module.css';
 
 function AuthContainer({ children }: PropsWithChildren) {

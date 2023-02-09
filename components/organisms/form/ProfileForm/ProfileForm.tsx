@@ -1,21 +1,21 @@
+import { yupResolver } from '@hookform/resolvers/yup';
 import { useRouter } from 'next/router';
 import { useCallback, useEffect } from 'react';
-import { useForm, SubmitHandler } from 'react-hook-form';
-
-import { yupResolver } from '@hookform/resolvers/yup';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import * as yup from 'yup';
 
-import Button from '../../../atoms/form/Button/Button';
-import Input from '../../../atoms/form/Input/Input';
-import Label from '../../../atoms/form/Label/Label';
-import ErrorText from '../../../atoms/form/ErrorText/ErrorText';
-import makeErrorMessage from '../../../../lib/helpers/makeErrorMessage';
-import { AuthApi } from '../../../../lib/api/auth';
-import { MyApiError } from '../../../../@types/api/api';
-import useUser from '../../../../lib/hooks/useUser';
+import { MyApiError } from '~types/api/api';
+
+import Button from '@components/atoms/form/Button/Button';
+import ErrorText from '@components/atoms/form/ErrorText/ErrorText';
+import Input from '@components/atoms/form/Input/Input';
+import Label from '@components/atoms/form/Label/Label';
+import { AuthApi } from '@lib/api/auth';
+import { profileSchema } from '@lib/api/schema';
+import makeErrorMessage from '@lib/helpers/makeErrorMessage';
+import useUser from '@lib/hooks/useUser';
 
 import styles from '../Form.module.css';
-import { profileSchema } from '../../../../lib/api/schema';
 
 type ProfileInput = yup.InferType<typeof profileSchema>;
 

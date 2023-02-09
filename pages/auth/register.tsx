@@ -1,5 +1,7 @@
 import { NextPage } from 'next';
-import RegisterForm from '../../components/organisms/form/RegisterForm';
+
+import RegisterForm from '@components/organisms/form/RegisterForm';
+
 import styles from '../../styles/Auth.module.css';
 
 const RegisterPage: NextPage = () => {

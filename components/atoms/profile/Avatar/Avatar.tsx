@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import { ComponentProps, forwardRef } from 'react';
+
 import styles from './Avatar.module.css';
 
 interface AvatarProps extends ComponentProps<'article'> {

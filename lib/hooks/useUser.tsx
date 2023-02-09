@@ -1,5 +1,6 @@
 import useSWR from 'swr';
-import { UserProfile } from '../../@types/api/response';
+
+import { UserProfile } from '~types/api/response';
 
 const useUser = () => {
   const { data, error, isLoading, mutate } = useSWR<UserProfile>('/auth/me', {

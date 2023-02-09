@@ -1,10 +1,11 @@
-import { api } from '..';
 import {
   ChangePasswordDto,
   LoginDto,
   RegisterDto,
   UpdateProfileDto,
-} from '../../../@types/api/auth';
+} from '~types/api/auth';
+
+import { api } from '..';
 
 const register = (registerDto: RegisterDto) => {
   return api.post('/auth/register', registerDto);

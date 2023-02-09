@@ -1,6 +1,8 @@
 import { useRouter } from 'next/router';
 import { useCallback } from 'react';
-import Button from '../../atoms/form/Button/Button';
+
+import Button from '@components/atoms/form/Button/Button';
+
 import styles from './Guard.module.css';
 
 function AuthGuard() {
