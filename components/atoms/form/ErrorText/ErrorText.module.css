@@ -163,6 +163,7 @@
 .base {
   position: absolute;
   right: 0;
+  top: 10px;
   font-size: 0.7rem;
   color: rgb(230, 10, 10);
 

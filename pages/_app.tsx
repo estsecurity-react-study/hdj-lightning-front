@@ -17,7 +17,7 @@ const NanumNeo = LocalFont({
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <SWRConfig value={{ fetcher }}>
-      <main className={`${NanumNeo.variable}`}>
+      <main className={`${NanumNeo.variable} w-full h-full`}>
         <Layout>
           <Component {...pageProps} />
         </Layout>

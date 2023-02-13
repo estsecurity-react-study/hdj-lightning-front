@@ -5,7 +5,7 @@ export default function Document() {
     <Html lang="ko">
       <Head />
 
-      <body>
+      <body className="max-w-[100vw] h-screen overflow-x-hidden bg-[var(--lightning-background-color)]">
         <Main />
         <NextScript />
       </body>
