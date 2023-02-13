@@ -9,7 +9,7 @@ function AuthGuard() {
   const router = useRouter();
 
   const handleClickLogin = useCallback(() => {
-    router.push(`/auth/login?goal=${router.pathname}`);
+    router.push(`/auth/login?goal=${router.asPath}`);
   }, [router]);
 
   return (
