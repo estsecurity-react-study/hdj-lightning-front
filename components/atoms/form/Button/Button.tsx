@@ -1,8 +1,6 @@
 import { ComponentProps, useMemo } from 'react';
 import tw, { TwStyle } from 'twin.macro';
 
-// import styles from './Button.module.css';
-
 type ButtonKind =
   | 'primary'
   | 'secondery'

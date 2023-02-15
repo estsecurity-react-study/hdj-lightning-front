@@ -1,7 +1,6 @@
 import Image from 'next/image';
 import { ComponentProps, forwardRef } from 'react';
-
-import styles from './Avatar.module.css';
+import tw from 'twin.macro';
 
 interface AvatarProps extends ComponentProps<'article'> {
   photoSrc?: string;
@@ -12,7 +11,17 @@ interface AvatarProps extends ComponentProps<'article'> {
 const Avatar = forwardRef<HTMLElement, AvatarProps>(
   ({ photoSrc, username, fallbackUsername, ...rest }, ref) => {
     return (
-      <article ref={ref} className={styles.profileAvatar} {...rest}>
+      <article
+        ref={ref}
+        css={[
+          tw`relative w-9 h-9 overflow-hidden`,
+          tw`flex justify-center items-center`,
+          tw`bg-[rgb(var(--lightning-color4))] text-white`,
+          tw`text-[0.725rem]`,
+          tw`rounded-full cursor-pointer`,
+        ]}
+        {...rest}
+      >
         {photoSrc ? (
           <Image
             src={photoSrc || ''}
