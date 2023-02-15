@@ -2,6 +2,7 @@ import { NextPage } from 'next';
 import { useCallback, useState } from 'react';
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import tw from 'twin.macro';
 
 import RoomListItem from '@components/atoms/chat/Room/RoomListItem';
 import Button from '@components/atoms/form/Button/Button';
@@ -83,28 +84,35 @@ const MyRoomsPage: NextPage = () => {
   return (
     <AuthContainer>
       {/* <RoomList /> */}
-      <div className="min-w-[250px] flex flex-col">
-        {subscribeRooms
-          ? subscribeRooms.map((room) => {
-              const _receiveCount =
-                messageNotices[room.id]?.unReadCount ?? room.unReadCount;
+      <section className="w-4/6 flex shadow-md">
+        <ul className="w-[250px] flex flex-col border border-b-0">
+          {subscribeRooms
+            ? subscribeRooms.map((room) => {
+                const _receiveCount =
+                  messageNotices[room.id]?.unReadCount ?? room.unReadCount;
 
-              return (
-                <RoomListItem
-                  key={room.id}
-                  roomName={room.name}
-                  receiveCount={_receiveCount}
-                  text={messageNotices[room.id]?.text}
-                  onClick={() => {
-                    fetch(room.id);
-                    console.log(room.id);
-                  }}
-                />
-              );
-            })
-          : null}
-        {/* {subscribeRooms ? <RoomList rooms={subscribeRooms} /> : null} */}
-      </div>
+                return (
+                  <RoomListItem
+                    key={room.id}
+                    roomName={room.name}
+                    receiveCount={_receiveCount}
+                    text={messageNotices[room.id]?.text}
+                    onClick={() => {
+                      fetch(room.id);
+                      console.log(room.id);
+                    }}
+                  />
+                );
+              })
+            : 'loading...'}
+        </ul>
+        <article className="flex-1 bg-slate-50 border border-l-0">
+          <div className="w-full h-full flex flex-col justify-end">
+            <ul className="flex-1">a</ul>
+            <Input css={[tw`h-14`, tw`border-none`]} />
+          </div>
+        </article>
+      </section>
       {/* <form
         onSubmit={handleSubmit(({ text }) =>
           createRoom({ name: text, userIds: [1, 2] }),
@@ -113,12 +121,12 @@ const MyRoomsPage: NextPage = () => {
         <Input {...register('text')} />
         <Button kind="submit" />
       </form> */}
-      <form
+      {/* <form
         onSubmit={handleSubmit(({ text }) => sendMessage({ text, roomId: 9 }))}
       >
         <Input {...register('text')} />
         <Button kind="submit" />
-      </form>
+      </form> */}
     </AuthContainer>
   );
 };

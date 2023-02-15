@@ -12,11 +12,11 @@ function RoomListItem({
   onClick,
 }: RoomListItemProps) {
   return (
-    <article
+    <li
       className="relative flex flex-col justify-center w-full min-h-[90px] bg-white px-[0.9rem] py-8 border-b border-[rgb(222,222,222)]"
       //   onDoubleClick={() => resetReceiveCount(room.id)}
       onDoubleClick={onClick}
-    //   onClick={onClick}
+      //   onClick={onClick}
     >
       <h3 className="flex">
         <span>{roomName || '방 이름'}</span>
@@ -27,7 +27,7 @@ function RoomListItem({
         )}
       </h3>
       <p className="mt-2 text-sm font-normal opacity-80">{text}</p>
-    </article>
+    </li>
   );
 }
 
