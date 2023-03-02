@@ -31,6 +31,7 @@ function ProfileForm() {
     register,
     handleSubmit,
     reset,
+    setValue,
     formState: { errors, isDirty, dirtyFields, isSubmitting },
   } = useForm<ProfileInput>({
     defaultValues: {

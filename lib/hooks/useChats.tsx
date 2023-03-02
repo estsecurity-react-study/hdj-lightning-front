@@ -3,11 +3,13 @@ import { Socket, io } from 'socket.io-client';
 
 import { UserProfile } from '~types/api/response';
 
+type UnReadCounts = Record<number, number>;
+
 interface Room {
   id: number;
   name: string;
   users: UserProfile[];
-  unReadCount: number;
+  unReadCounts: UnReadCounts;
 }
 
 export interface Message {
@@ -28,16 +30,16 @@ interface CreateRoomRequest {
 
 interface MessageRequest {
   text: string;
-  roomId: number;
+  roomId: number | undefined;
 }
 
 export interface FetchResponse {
-  unReadCount: number;
+  unReadCounts: UnReadCounts;
   messages: Message[];
 }
 
 export interface ReceiveResponse {
-  unReadCount: number;
+  unReadCounts: UnReadCounts;
   message: ReceiveMessage;
 }
 
@@ -53,7 +55,7 @@ interface NamespaceSpecificClientToServerEvents {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   clientSend: (message: MessageRequest, ...args: any[]) => void;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  fetch: (fetchInfo: { roomId: number }, ...args: any[]) => void;
+  fetch: (fetchInfo: { roomId: number | undefined }, ...args: any[]) => void;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   subscribe: (...args: any[]) => void;
   createRoom: (roomInfo: CreateRoomRequest) => void;
@@ -72,6 +74,7 @@ const socket: Socket<
   transports: ['websocket'],
 });
 
+// TODO: 특정 roomId만 subscribe
 const useChats = ({
   onReload,
   onReceive,
@@ -100,7 +103,7 @@ const useChats = ({
   );
 
   // 메세지 GET
-  const fetch = (roomId: number) => {
+  const fetch = (roomId: number | undefined) => {
     // 리시브 카운트 초기화
     // 초기 데이터 가져옴
     socket.emit('fetch', { roomId }, (response: FetchResponse) => {
@@ -117,8 +120,8 @@ const useChats = ({
   );
 
   const handleReceive = useCallback(
-    ({ message, unReadCount }: ReceiveResponse) => {
-      onReceive?.({ message, unReadCount });
+    ({ message, unReadCounts }: ReceiveResponse) => {
+      onReceive?.({ message, unReadCounts });
     },
     [onReceive],
   );

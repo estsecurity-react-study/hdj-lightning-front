@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useCallback } from 'react';
+import tw, { css } from 'twin.macro';
 
 import Button from '@components/atoms/form/Button/Button';
 import { variants } from '@lib/helpers/variants';
@@ -29,6 +30,12 @@ const logoVariants = variants({
     },
   },
 });
+
+const testCss = css`
+  font-size: 12px;
+  color: tomato;
+  background-color: black;
+`;
 
 export default function Home() {
   const { isLogin } = useUser();
@@ -61,6 +68,8 @@ export default function Home() {
             initial="hidden"
             animate="show"
           >
+            <div css={tw`text-red-400 text-2xl`}>Twin.Macro 테스트용 div</div>
+            <div css={testCss}>Twin.Macro 테스트용 div2</div>
             <motion.h3
               variants={itemVariants}
               initial="hidden"

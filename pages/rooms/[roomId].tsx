@@ -1,78 +1,56 @@
 import { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import tw from 'twin.macro';
 
-import MessageBox from '@components/atoms/chat/Message/Message';
 import AuthContainer from '@components/layout/Container/AuthContainer';
-// import useChat, { Chat } from '@lib/hooks/useChat';
-import useUser from '@lib/hooks/useUser';
+import ChatRoom from '@components/organisms/chat/ChatRoom';
+import useChats, {
+  FetchResponse,
+  Message,
+  ReceiveResponse,
+} from '@lib/hooks/useChats';
 
 const RoomsPage: NextPage = () => {
-  // const {
-  //   query: { roomId },
-  // } = useRouter();
-  // const { user } = useUser();
+  const {
+    query: { roomId },
+  } = useRouter();
+  const [messages, setMessages] = useState<Message[]>();
 
-  // const { register, handleSubmit, setValue } = useForm<{
-  //   text: string;
-  // }>();
-  // const [messages, setMessages] = useState<Chat[]>([]);
+  const _roomId = useMemo(() => {
+    const numberId = Number(roomId);
+    return Number.isNaN(numberId) ? undefined : numberId;
+  }, [roomId]);
 
-  // const onReceive = useCallback((chat: Chat) => {
-  //   setMessages((prevMessages) => prevMessages.concat(chat));
-  // }, []);
+  const onFetch = useCallback((res: FetchResponse) => {
+    console.log(res);
+    setMessages(res.messages);
+  }, []);
 
-  // const { prevRoomMessages, sendMessage } = useChat({
-  //   mode: 'room',
-  //   roomId: Number(roomId || 0),
-  //   user,
-  //   onReceive,
-  // });
+  const onReceive = useCallback((res: ReceiveResponse) => {
+    console.log(res.message);
+    setMessages((prevMessages) => prevMessages?.concat(res.message));
+  }, []);
 
-  // const onSubmit: SubmitHandler<{ text: string }> = useCallback(
-  //   ({ text }) => {
-  //     sendMessage(text);
-  //     setValue('text', '');
-  //   },
-  //   [sendMessage, setValue],
-  // );
+  const { sendMessage, fetch } = useChats({ onReceive, onFetch });
 
-  // useEffect(() => {
-  //   setMessages((prevMessages) => {
-  //     if (prevMessages.length === 0) {
-  //       return prevRoomMessages;
-  //     }
+  const onSend = useCallback(
+    (text: string) => {
+      sendMessage({ text, roomId: _roomId });
+    },
+    [sendMessage, _roomId],
+  );
 
-  //     return prevMessages;
-  //   });
-  // }, [prevRoomMessages]);
+  useEffect(() => {
+    if (messages) return;
+    fetch(_roomId);
+  }, [fetch, _roomId, messages]);
 
   return (
     <AuthContainer>
-      {/* <div
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'flex-end',
-          width: '300px',
-          height: '500px',
-          border: '1px solid black',
-          marginRight: '1rem',
-          overflow: 'hidden',
-        }}
-      >
-        {messages.map(({ text, isMe, time }, index) => (
-          <div key={`${time}_${index}`}>
-            <MessageBox me={isMe}>{text}</MessageBox>
-          </div>
-        ))}
+      <div css={[tw`w-96 h-full max-h-[640px]`, tw`shadow-md`]}>
+        <ChatRoom info={{ messages, roomId: _roomId }} onSend={onSend} />
       </div>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <input type="text" {...register('text')} />
-
-        <button type="submit">Submit</button>
-      </form> */}
     </AuthContainer>
   );
 };

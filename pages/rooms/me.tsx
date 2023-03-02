@@ -1,15 +1,11 @@
 import { NextPage } from 'next';
 import { useCallback, useState } from 'react';
 import React from 'react';
-import { useForm } from 'react-hook-form';
-import { SubmitHandler } from 'react-hook-form/dist/types';
 import tw from 'twin.macro';
 
-import Message from '@components/atoms/chat/Message/Message';
 import RoomListItem from '@components/atoms/chat/Room/RoomListItem';
-import Button from '@components/atoms/form/Button/Button';
-import Input from '@components/atoms/form/Input/Input';
 import AuthContainer from '@components/layout/Container/AuthContainer';
+import ChatRoom from '@components/organisms/chat/ChatRoom';
 import useChats, {
   FetchResponse,
   Message as IMessage,
@@ -29,7 +25,6 @@ interface PreviewMessages {
 
 const MyRoomsPage: NextPage = () => {
   const { user } = useUser();
-  const { register, handleSubmit } = useForm<{ text: string }>();
   const [messageNotices, setMessageNotices] = useState<PreviewMessages>({
     0: {
       unReadCount: 0,
@@ -41,35 +36,39 @@ const MyRoomsPage: NextPage = () => {
   const [selectedRoomId, setSelectedRoomId] = useState<number>();
 
   const onFetch = useCallback((response: FetchResponse) => {
+    console.log(response.messages);
     setMessages(response.messages);
   }, []);
 
-  const onReceive = useCallback((response: ReceiveResponse) => {
-    const {
-      message: {
-        text,
-        createAt,
-        room: { id: roomId },
-        user,
-      },
-      unReadCount,
-    } = response;
-
-    setMessages((prevMessages) =>
-      prevMessages?.concat({ text, createAt, user }),
-    );
-
-    setMessageNotices((prevNotices) => {
-      return {
-        ...prevNotices,
-        [roomId]: {
-          unReadCount,
+  const onReceive = useCallback(
+    (response: ReceiveResponse) => {
+      const {
+        message: {
           text,
           createAt,
+          room: { id: roomId },
+          user: sender,
         },
-      };
-    });
-  }, []);
+        unReadCounts,
+      } = response;
+
+      setMessages((prevMessages) =>
+        prevMessages?.concat({ text, createAt, user: sender }),
+      );
+
+      setMessageNotices((prevNotices) => {
+        return {
+          ...prevNotices,
+          [roomId]: {
+            unReadCount: unReadCounts[user?.id || 0] || 0,
+            text,
+            createAt,
+          },
+        };
+      });
+    },
+    [user?.id],
+  );
 
   const onReload = useCallback((roomId: number) => {
     console.log('reload:', roomId);
@@ -86,13 +85,10 @@ const MyRoomsPage: NextPage = () => {
     onFetch,
     onReceive,
     onReload,
-    onSend: (a) => {
-      console.log('send:', a);
-    },
   });
 
-  const onSubmit: SubmitHandler<{ text: string }> = useCallback(
-    ({ text }) => {
+  const onSubmit = useCallback(
+    (text: string) => {
       sendMessage({ text, roomId: selectedRoomId || 0 });
     },
     [sendMessage, selectedRoomId],
@@ -102,11 +98,17 @@ const MyRoomsPage: NextPage = () => {
     <AuthContainer>
       {/* <RoomList /> */}
       <section className="w-4/6 max-h-[680px] flex shadow-md">
-        <ul className="w-[250px] flex flex-col border border-b-0">
+        <ul
+          css={[
+            tw`w-[250px] max-h-full flex flex-col overflow-y-auto`,
+            tw`border border-b-0`,
+          ]}
+        >
           {subscribeRooms
             ? subscribeRooms.map((room) => {
                 const _receiveCount =
-                  messageNotices[room.id]?.unReadCount ?? room.unReadCount;
+                  messageNotices[room.id]?.unReadCount ??
+                  room.unReadCounts[user?.id || 0];
 
                 return (
                   <RoomListItem
@@ -124,27 +126,11 @@ const MyRoomsPage: NextPage = () => {
               })
             : 'loading...'}
         </ul>
-        <article css={[tw`flex-1 bg-slate-50`, tw`border border-l-0`]}>
-          <div className="w-full h-full flex flex-col justify-end">
-            <ul
-              css={[
-                tw`w-full h-full overflow-auto`,
-                tw`flex-1 flex flex-col`,
-                tw`mr-4`,
-              ]}
-            >
-              {messages?.map(({ user: _user, text, createAt }) => {
-                return (
-                  <div key={`${createAt}_${_user.id}`} css={tw`mb-2`}>
-                    <Message me={_user.id === user?.id}>{text}</Message>
-                  </div>
-                );
-              })}
-            </ul>
-            <form onSubmit={handleSubmit(onSubmit)}>
-              <Input css={[tw`h-14`, tw`border-none`]} {...register('text')} />
-            </form>
-          </div>
+        <article css={[tw`flex-1`, tw`border border-l-0`]}>
+          <ChatRoom
+            info={{ messages, roomId: selectedRoomId }}
+            onSend={onSubmit}
+          />
         </article>
       </section>
     </AuthContainer>

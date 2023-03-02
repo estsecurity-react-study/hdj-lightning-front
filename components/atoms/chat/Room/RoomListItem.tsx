@@ -1,3 +1,5 @@
+import tw from 'twin.macro';
+
 interface RoomListItemProps {
   roomName: string;
   receiveCount: number;
@@ -13,7 +15,9 @@ function RoomListItem({
 }: RoomListItemProps) {
   return (
     <li
-      className="relative flex flex-col justify-center w-full min-h-[90px] bg-white px-[0.9rem] py-8 border-b border-[rgb(222,222,222)]"
+      css={[
+        tw`flex flex-col justify-center w-full h-[90px] bg-white px-[0.9rem] py-8 border-b border-[rgb(222,222,222)]`,
+      ]}
       //   onDoubleClick={() => resetReceiveCount(room.id)}
       onDoubleClick={onClick}
       //   onClick={onClick}
